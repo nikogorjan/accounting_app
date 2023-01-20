@@ -19,99 +19,103 @@ class _LoginScreenDesktopState extends State<LoginScreenDesktop> {
           color: Colors.white,
           child: Padding(
             padding: const EdgeInsets.fromLTRB(100, 220, 100, 0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+            child: ListView(
               children: [
-                Text(
-                  "Dobrodošli nazaj!",
-                  style: TextStyle(
-                      fontFamily: 'OpenSans',
-                      fontWeight: FontWeight.w600,
-                      fontSize: 40),
-                ),
-                SizedBox(
-                  height: 0,
-                ),
-                Text(
-                  'Nadgradite vašo kariero.',
-                  style: TextStyle(
-                    fontFamily: 'OpenSans',
-                    fontWeight: FontWeight.w400,
-                    fontSize: 20,
-                    color: Color(0xA4A3A3A4),
-                  ),
-                ),
-                SizedBox(
-                  height: 80,
-                ),
-                TextFormField(
-                  decoration: const InputDecoration(
-                      border: UnderlineInputBorder(),
-                      labelText: 'E-naslov',
-                      hintStyle: TextStyle(
-                        fontFamily: 'OpenSans',
-                        color: Color(0xA4A3A3A4),
-                        fontSize: 24,
-                        fontWeight: FontWeight.w400,
-                      )),
-                ),
-                SizedBox(
-                  height: 30,
-                ),
-                TextFormField(
-                  obscureText: true,
-                  decoration: const InputDecoration(
-                      border: UnderlineInputBorder(),
-                      labelText: 'Geslo',
-                      hintStyle: TextStyle(
-                        fontFamily: 'OpenSans',
-                        color: Color(0xA4A3A3A4),
-                        fontSize: 24,
-                        fontWeight: FontWeight.w400,
-                      )),
-                ),
-                SizedBox(
-                  height: 40,
-                ),
-                SizedBox(
-                  width: 460,
-                  height: 40,
-                  child: ElevatedButton(
-                    onPressed: () {},
-                    child: Text(
-                      "Vpis",
-                      style: TextStyle(fontFamily: 'OpenSans'),
-                    ),
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.black,
-                      elevation: 0,
-                    ),
-                  ),
-                ),
-                SizedBox(
-                  height: 20,
-                ),
-                Row(
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'Niste član?',
+                      "Dobrodošli nazaj!",
+                      style: TextStyle(
+                          fontFamily: 'OpenSans',
+                          fontWeight: FontWeight.w600,
+                          fontSize: 40),
+                    ),
+                    SizedBox(
+                      height: 0,
+                    ),
+                    Text(
+                      'Nadgradite vašo kariero.',
                       style: TextStyle(
                         fontFamily: 'OpenSans',
-                        fontSize: 16,
                         fontWeight: FontWeight.w400,
+                        fontSize: 20,
                         color: Color(0xA4A3A3A4),
                       ),
                     ),
-                    TextButton(
+                    SizedBox(
+                      height: 80,
+                    ),
+                    TextFormField(
+                      decoration: const InputDecoration(
+                          border: UnderlineInputBorder(),
+                          labelText: 'E-naslov',
+                          hintStyle: TextStyle(
+                            fontFamily: 'OpenSans',
+                            color: Color(0xA4A3A3A4),
+                            fontSize: 24,
+                            fontWeight: FontWeight.w400,
+                          )),
+                    ),
+                    SizedBox(
+                      height: 30,
+                    ),
+                    TextFormField(
+                      obscureText: true,
+                      decoration: const InputDecoration(
+                          border: UnderlineInputBorder(),
+                          labelText: 'Geslo',
+                          hintStyle: TextStyle(
+                            fontFamily: 'OpenSans',
+                            color: Color(0xA4A3A3A4),
+                            fontSize: 24,
+                            fontWeight: FontWeight.w400,
+                          )),
+                    ),
+                    SizedBox(
+                      height: 40,
+                    ),
+                    SizedBox(
+                      width: 460,
+                      height: 40,
+                      child: ElevatedButton(
                         onPressed: () {},
                         child: Text(
-                          'Registracija',
+                          "Vpis",
+                          style: TextStyle(fontFamily: 'OpenSans'),
+                        ),
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.black,
+                          elevation: 0,
+                        ),
+                      ),
+                    ),
+                    SizedBox(
+                      height: 20,
+                    ),
+                    Row(
+                      children: [
+                        Text(
+                          'Niste član?',
                           style: TextStyle(
-                              color: Colors.blue,
-                              fontFamily: 'OpenSans',
-                              fontSize: 16,
-                              fontWeight: FontWeight.bold),
-                        ))
+                            fontFamily: 'OpenSans',
+                            fontSize: 16,
+                            fontWeight: FontWeight.w400,
+                            color: Color(0xA4A3A3A4),
+                          ),
+                        ),
+                        TextButton(
+                            onPressed: () {},
+                            child: Text(
+                              'Registracija',
+                              style: TextStyle(
+                                  color: Colors.blue,
+                                  fontFamily: 'OpenSans',
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.bold),
+                            ))
+                      ],
+                    ),
                   ],
                 ),
               ],
