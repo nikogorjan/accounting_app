@@ -5,30 +5,39 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 
-class LoginScreenMobile extends StatefulWidget {
-  LoginScreenMobile({super.key});
+class RegisterScreenMobile extends StatefulWidget {
+  const RegisterScreenMobile({super.key});
 
   @override
-  State<LoginScreenMobile> createState() => _LoginScreenMobileState();
+  State<RegisterScreenMobile> createState() => _RegisterScreenMobileState();
 }
 
-class _LoginScreenMobileState extends State<LoginScreenMobile> {
+class _RegisterScreenMobileState extends State<RegisterScreenMobile> {
   final _emailController = TextEditingController();
-
   final _passwordController = TextEditingController();
+  final _confirmPasswordController = TextEditingController();
+  bool showRed = false;
 
-  Future signIn() async {
-    await FirebaseAuth.instance.signInWithEmailAndPassword(
-      email: _emailController.text.trim(),
-      password: _passwordController.text.trim(),
-    );
+  Future signUp() async {
+    if (passwordConfirmed()) {
+      await FirebaseAuth.instance.createUserWithEmailAndPassword(
+          email: _emailController.text.trim(),
+          password: _passwordController.text.trim());
+      Navigator.push(
+          context, MaterialPageRoute(builder: (context) => Dashboard()));
+    } else {
+      showRed = true;
+      setState(() {});
+    }
   }
 
-  @override
-  void dispose() {
-    _emailController.dispose();
-    _passwordController.dispose();
-    super.dispose();
+  bool passwordConfirmed() {
+    if (_passwordController.text.trim() ==
+        _confirmPasswordController.text.trim()) {
+      return true;
+    } else {
+      return false;
+    }
   }
 
   @override
@@ -42,7 +51,7 @@ class _LoginScreenMobileState extends State<LoginScreenMobile> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  "Dobrodošli nazaj!",
+                  "Registracija!",
                   style: TextStyle(
                       fontFamily: 'OpenSans',
                       fontWeight: FontWeight.w600,
@@ -98,15 +107,34 @@ class _LoginScreenMobileState extends State<LoginScreenMobile> {
                   ),
                 ),
                 SizedBox(
+                  height: 20,
+                ),
+                SizedBox(
+                  width: 460,
+                  child: TextFormField(
+                    controller: _confirmPasswordController,
+                    obscureText: true,
+                    decoration: const InputDecoration(
+                        border: UnderlineInputBorder(),
+                        labelText: 'Ponovi Geslo',
+                        hintStyle: TextStyle(
+                          fontFamily: 'OpenSans',
+                          color: Color(0xA4A3A3A4),
+                          fontSize: 20,
+                          fontWeight: FontWeight.w400,
+                        )),
+                  ),
+                ),
+                SizedBox(
                   height: 40,
                 ),
                 SizedBox(
                   width: 460,
                   height: 40,
                   child: ElevatedButton(
-                    onPressed: signIn,
+                    onPressed: signUp,
                     child: Text(
-                      "Vpis",
+                      "Registriraj",
                       style: TextStyle(fontFamily: 'OpenSans'),
                     ),
                     style: ElevatedButton.styleFrom(
@@ -121,7 +149,7 @@ class _LoginScreenMobileState extends State<LoginScreenMobile> {
                 Row(
                   children: [
                     Text(
-                      'Niste član?',
+                      'Že imate račun?',
                       style: TextStyle(
                         fontFamily: 'OpenSans',
                         fontSize: 12,
@@ -134,11 +162,10 @@ class _LoginScreenMobileState extends State<LoginScreenMobile> {
                           Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) =>
-                                      const RegisterScreen()));
+                                  builder: (context) => HomeScreen()));
                         },
                         child: Text(
-                          'Registracija',
+                          'Vpis',
                           style: TextStyle(
                               color: Colors.blue,
                               fontFamily: 'OpenSans',
@@ -147,6 +174,18 @@ class _LoginScreenMobileState extends State<LoginScreenMobile> {
                         ))
                   ],
                 ),
+                SizedBox(
+                  height: 20,
+                ),
+                if (showRed)
+                  Text(
+                    'Gesli se ne ujemata',
+                    style: TextStyle(
+                        fontFamily: 'OpenSans',
+                        fontSize: 16,
+                        color: Colors.red,
+                        fontWeight: FontWeight.bold),
+                  ),
               ],
             ),
           ],

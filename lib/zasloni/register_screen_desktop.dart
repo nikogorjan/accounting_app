@@ -1,34 +1,43 @@
-//import 'dart:html';
-
 import 'package:accounting_app/zasloni/screens.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 
-class LoginScreenDesktop extends StatefulWidget {
-  const LoginScreenDesktop({super.key});
+class RegisterScreenDesktop extends StatefulWidget {
+  const RegisterScreenDesktop({super.key});
 
   @override
-  State<LoginScreenDesktop> createState() => _LoginScreenDesktopState();
+  State<RegisterScreenDesktop> createState() => _RegisterScreenDesktopState();
 }
 
-class _LoginScreenDesktopState extends State<LoginScreenDesktop> {
+class _RegisterScreenDesktopState extends State<RegisterScreenDesktop> {
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
+  final _confirmPasswordController = TextEditingController();
+  bool showRed = false;
 
-  Future signIn() async {
-    await FirebaseAuth.instance.signInWithEmailAndPassword(
-      email: _emailController.text.trim(),
-      password: _passwordController.text.trim(),
-    );
+  Future signUp() async {
+    if (passwordConfirmed()) {
+      await FirebaseAuth.instance.createUserWithEmailAndPassword(
+          email: _emailController.text.trim(),
+          password: _passwordController.text.trim());
+      Navigator.push(
+          context, MaterialPageRoute(builder: (context) => Dashboard()));
+    } else {
+      showRed = true;
+      setState(() {});
+    }
   }
 
-  @override
-  void dispose() {
-    _emailController.dispose();
-    _passwordController.dispose();
-    super.dispose();
+  bool passwordConfirmed() {
+    if (_passwordController.text.trim() ==
+        _confirmPasswordController.text.trim()) {
+      return true;
+    } else {
+      return false;
+    }
   }
 
   @override
@@ -46,7 +55,7 @@ class _LoginScreenDesktopState extends State<LoginScreenDesktop> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      "Dobrodošli nazaj!",
+                      "Registracija!",
                       style: TextStyle(
                           fontFamily: 'OpenSans',
                           fontWeight: FontWeight.w600,
@@ -96,15 +105,31 @@ class _LoginScreenDesktopState extends State<LoginScreenDesktop> {
                           )),
                     ),
                     SizedBox(
+                      height: 30,
+                    ),
+                    TextFormField(
+                      controller: _confirmPasswordController,
+                      obscureText: true,
+                      decoration: const InputDecoration(
+                          border: UnderlineInputBorder(),
+                          labelText: 'Ponovi geslo',
+                          hintStyle: TextStyle(
+                            fontFamily: 'OpenSans',
+                            color: Color(0xA4A3A3A4),
+                            fontSize: 24,
+                            fontWeight: FontWeight.w400,
+                          )),
+                    ),
+                    SizedBox(
                       height: 40,
                     ),
                     SizedBox(
                       width: 460,
                       height: 40,
                       child: ElevatedButton(
-                        onPressed: signIn,
+                        onPressed: signUp,
                         child: Text(
-                          "Vpis",
+                          "Registriraj",
                           style: TextStyle(fontFamily: 'OpenSans'),
                         ),
                         style: ElevatedButton.styleFrom(
@@ -119,7 +144,7 @@ class _LoginScreenDesktopState extends State<LoginScreenDesktop> {
                     Row(
                       children: [
                         Text(
-                          'Niste član?',
+                          'Že imate račun?',
                           style: TextStyle(
                             fontFamily: 'OpenSans',
                             fontSize: 16,
@@ -132,11 +157,10 @@ class _LoginScreenDesktopState extends State<LoginScreenDesktop> {
                               Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                      builder: (context) =>
-                                          const RegisterScreen()));
+                                      builder: (context) => HomeScreen()));
                             },
                             child: Text(
-                              'Registracija',
+                              'Vpis',
                               style: TextStyle(
                                   color: Colors.blue,
                                   fontFamily: 'OpenSans',
@@ -145,6 +169,18 @@ class _LoginScreenDesktopState extends State<LoginScreenDesktop> {
                             ))
                       ],
                     ),
+                    SizedBox(
+                      height: 20,
+                    ),
+                    if (showRed)
+                      Text(
+                        'Gesli se ne ujemata',
+                        style: TextStyle(
+                            fontFamily: 'OpenSans',
+                            fontSize: 16,
+                            color: Colors.red,
+                            fontWeight: FontWeight.bold),
+                      ),
                   ],
                 ),
               ],
