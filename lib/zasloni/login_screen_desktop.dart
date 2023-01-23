@@ -35,11 +35,17 @@ class _LoginScreenDesktopState extends State<LoginScreenDesktop> {
   Widget build(BuildContext context) {
     return Row(
       children: [
+        Flexible(
+            //flex: 1,
+            child: Container(
+          width: 380,
+          color: Colors.white,
+        )),
         Container(
-          width: 640,
+          width: 460,
           color: Colors.white,
           child: Padding(
-            padding: const EdgeInsets.fromLTRB(100, 220, 100, 0),
+            padding: const EdgeInsets.fromLTRB(0, 220, 100, 0),
             child: ListView(
               children: [
                 Column(
@@ -152,11 +158,12 @@ class _LoginScreenDesktopState extends State<LoginScreenDesktop> {
           ),
         ),
         Flexible(
+          flex: 3,
           child: Container(
-            width: double.infinity,
+            width: 1080, //double.infinity,
             decoration: const BoxDecoration(
               image: DecorationImage(
-                image: AssetImage('lib/sredstva/logo_centered.png'),
+                image: AssetImage('lib/sredstva/hotpot.png'),
                 fit: BoxFit.cover,
               ),
             ),
