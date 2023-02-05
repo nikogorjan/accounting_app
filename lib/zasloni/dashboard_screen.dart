@@ -21,11 +21,16 @@ class _DashboardState extends State<Dashboard> {
         builder: (context, snapshot) {
           if (snapshot.hasData) {
             return Responsive(
+                smallDesktop: DashboardScreenSmallDesktop(),
+                tablet: DashboardScreenTablet(),
                 mobile: DashboardScreenMobile(),
                 desktop: DashboardScreenDesktop());
           } else {
             return Responsive(
-                mobile: LoginScreenMobile(), desktop: LoginScreenDesktop());
+                smallDesktop: LoginScreenDesktop(),
+                tablet: LoginScreenDesktop(),
+                mobile: LoginScreenMobile(),
+                desktop: LoginScreenDesktop());
           }
         },
       ),

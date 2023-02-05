@@ -33,7 +33,10 @@ dependencies:
     sdk: flutter
   firebase_core: ^2.4.1
   firebase_auth: ^4.2.5
-
+  responsive_grid: ^2.1.0
+  cloud_firestore: ^4.3.1
+  hive: ^2.2.3
+  hive_flutter: ^1.1.0
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
@@ -42,7 +45,8 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
-
+  hive_generator: ^2.0.0
+  build_runner: ^2.3.3
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is
   # activated in the `analysis_options.yaml` file located at the root of your
@@ -65,7 +69,15 @@ flutter:
   assets:
     - lib/sredstva/logo_centered.png
     - lib/sredstva/hotpot.png
-    
+    - lib/sredstva/dashboard.png
+    - lib/sredstva/banka.png
+    - lib/sredstva/prodaja.png
+    - lib/sredstva/stroski.png
+    - lib/sredstva/delavci.png
+    - lib/sredstva/porocila.png
+    - lib/sredstva/inventar.png
+    - lib/sredstva/projekti.png
+    - lib/sredstva/glavna_knjiga.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

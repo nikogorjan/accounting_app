@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:accounting_app/data/data.dart';
 
 class RegisterScreenMobile extends StatefulWidget {
   const RegisterScreenMobile({super.key});
@@ -19,6 +20,9 @@ class _RegisterScreenMobileState extends State<RegisterScreenMobile> {
   bool showRed = false;
 
   Future signUp() async {
+    //global.email = _emailController.text.trim();
+    box.put('email', _emailController.text.trim());
+
     if (passwordConfirmed()) {
       await FirebaseAuth.instance.createUserWithEmailAndPassword(
           email: _emailController.text.trim(),

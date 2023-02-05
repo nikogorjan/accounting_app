@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:accounting_app/data/data.dart';
 
 class LoginScreenMobile extends StatefulWidget {
   LoginScreenMobile({super.key});
@@ -18,6 +19,8 @@ class _LoginScreenMobileState extends State<LoginScreenMobile> {
   final _passwordController = TextEditingController();
 
   Future signIn() async {
+    //global.email = _emailController.text.trim();
+    _emailController.text.trim();
     await FirebaseAuth.instance.signInWithEmailAndPassword(
       email: _emailController.text.trim(),
       password: _passwordController.text.trim(),
@@ -144,7 +147,7 @@ class _LoginScreenMobileState extends State<LoginScreenMobile> {
                               fontFamily: 'OpenSans',
                               fontSize: 12,
                               fontWeight: FontWeight.bold),
-                        ))
+                        )),
                   ],
                 ),
               ],

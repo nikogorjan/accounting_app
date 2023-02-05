@@ -8,3 +8,5 @@ export 'register_screen_desktop.dart';
 export 'register_screen.dart';
 export 'register_screen_mobile.dart';
 export 'register_screen_desktop.dart';
+export 'dashboard_screen_tablet.dart';
+export 'dashboard_screen_small_desktop.dart';
