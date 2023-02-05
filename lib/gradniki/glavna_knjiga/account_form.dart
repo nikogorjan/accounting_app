@@ -197,6 +197,62 @@ class _AccountFormState extends State<AccountForm> {
     return ret;
   }
 
+  String returnSubtypeString(String tip) {
+    String podtip = '';
+    List<String> stalnaSredstva = [
+      'Neopredmetena dolgoročna sredstva',
+      'Opredmetena osnovna sredstva',
+      'Dolgoročne finančne naložbe'
+    ];
+    List<String> gibljivaSredstva = [
+      'Zaloge',
+      'Kratkoročne terjatve iz poslovanja',
+      'Kratkoročne finančne naložbe',
+      'Denarna sredstva',
+      'Aktivne časovne omejitve'
+    ];
+    List<String> kapital = [
+      'Osnovni kapital',
+      'Finančni kapital',
+      'Celotni kapital',
+    ];
+    List<String> obveznosti = [
+      'Dolgoročne rezervacije',
+      'Dolgoročne obveznosti iz financiranja',
+      'Dolgoročne obveznosti iz poslovanja',
+      'Kratkoročne obveznosti iz financiranja',
+      'Kratkoročne obveznosti iz poslovanja',
+      'Pasivne časovne razmejitve'
+    ];
+    List<String> prihodki = [
+      'Poslovni prihodki',
+      'Finančni prihodki',
+      'Izredni prihodki',
+    ];
+    List<String> odhodki = [
+      'Poslovni odhodki',
+      'Prevrednotovalni odhodki',
+      'Finančni odhodki',
+      'Izredni odhodki'
+    ];
+
+    if (tip == 'Stalna sredstva') {
+      podtip = stalnaSredstva.first;
+    } else if (tip == 'Gibljiva sredstva') {
+      podtip = gibljivaSredstva.first;
+    } else if (tip == 'Kapital') {
+      podtip = kapital.first;
+    } else if (tip == 'Obveznosti') {
+      podtip = obveznosti.first;
+    } else if (tip == 'Prihodki') {
+      podtip = prihodki.first;
+    } else if (tip == 'Odhodki') {
+      podtip = odhodki.first;
+    }
+
+    return podtip;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -458,6 +514,8 @@ class _AccountFormState extends State<AccountForm> {
                       setState(() {
                         dropdownValue = value!;
                       });
+                      dropdownValue2notifier.value =
+                          returnSubtypeString(dropdownValue);
                     },
                   ),
                 ),
@@ -501,9 +559,14 @@ class _AccountFormState extends State<AccountForm> {
                 ),
                 Expanded(
                   child: Container(
+                    decoration: BoxDecoration(
+                        color: Color.fromRGBO(217, 234, 250, 0.2),
+                        borderRadius: BorderRadius.all(Radius.circular(
+                                5.0) //                 <--- border radius here
+                            ),
+                        border: Border.all(color: Colors.grey)),
                     width: 360,
                     padding: EdgeInsets.all(8.0),
-                    color: Color.fromRGBO(217, 234, 250, 0.2),
                     child: ValueListenableBuilder(
                       valueListenable: dropdownValue2notifier,
                       builder: (context, value, child) {

@@ -194,12 +194,77 @@ class _AccountFormChangerState extends State<AccountFormChanger> {
   }
 
   String showAccountDescription(String subtype) {
-    String ret = '';
+    String ret = 'Patenti, licence, industrijska lastnina in drugo.';
 
     if (subtype == 'Neopredmetena dolgoročna sredstva') {
-      ret = 'Neopredmetena dolgoročna';
+      ret = 'Patenti, licence, industrijska lastnina in drugo.';
     } else if (subtype == 'Opredmetena osnovna sredstva') {
-      ret = 'Opredmetena osnovna';
+      ret =
+          'Zemljišča, zgradbe, oprema, stroji, transportna sredstva, večletni nasadi, osnovna čreda in drugo.';
+    } else if (subtype == 'Dolgoročne finančne naložbe') {
+      ret = 'Dana dolgoročna posojila, kupljeni dolgoročni vrednostni papirji.';
+    } else if (subtype == 'Zaloge') {
+      ret =
+          'Surovine, material, nedokončane proizvodnje, polproizvodi, gotovi proizvodi, trgovsko blago.';
+    } else if (subtype == 'Kratkoročne terjatve iz poslovanja') {
+      ret =
+          'Terjatve do kupcev, katerim smo na osnovi premoženjsko-pravnih in drugih razmerij prodali proizvode, blago ali opravili storitve na odložen rok plačila.';
+    } else if (subtype == 'Kratkoročne finančne naložbe') {
+      ret =
+          'Dana kratkoročna posojila, kupljeni kratkoročni vrednostni papirji.';
+    } else if (subtype == 'Denarna sredstva') {
+      ret =
+          'Denarna sredstva v blagajni in dobroimetje na računih v bankah in drugih finančnih institucijah, ki jih delimo na tuja in domača denarna sredstva.';
+    } else if (subtype == 'Aktivne časovne omejitve') {
+      ret =
+          'Kratkoročno odloženi stroški, to so odhodki, so vnaprej plačani zneski, ki ob plačilu še ne morejo bremeniti dejavnosti podjetja in vplivati na poslovni izid; ob plačilu jih še ne moremo všteti v nabavne vrednosti opredmetenih osnovnih sredstev ali zalog.';
+    } else if (subtype == 'Dolgoročne rezervacije') {
+      ret =
+          'Dolgoročno rezervirane obveznosti, ki lahko nastanejona podlagi sklenjenih pravnih poslov ali na kakšni drugi pravni podlagi oziroma zanje vsaj utemeljeno, na podlagi izkušenj ali stroškovnih ocen pričakujemo, da bodo nastale čez več kot eno leto.';
+    } else if (subtype == 'Dolgoročne obveznosti iz financiranja') {
+      ret =
+          'Obveznosti, ki zapadejo v plačilo v roku, ki je daljši od leta dni. To so dolgoročna dobljena posojila in izdani dolgoročni vrednostni papirji - obveznice.';
+    } else if (subtype == 'Dolgoročne obveznosti iz poslovanja') {
+      ret =
+          'So dolgoročne obveznosti v zvezi s kuplenim blagom ali storitvami, ki jih lahko imamo do domačih ali tujih pravnih in fizičnih oseb.';
+    } else if (subtype == 'Kratkoročne obveznosti iz financiranja') {
+      ret =
+          'Te zapadejo v plačilo v letu dni ali prej. To so kratkoročno dobljena posojila, izdani kratkoročni vrednostni papirji - zlasti menice.';
+    } else if (subtype == 'Kratkoročne obveznosti iz poslovanja') {
+      ret =
+          'Obveznosti, ki zapadejo v plačilo v letu dni ali prej. To so dobljeni avansi od kupcev, kratkoročne obveznosti do dobaviteljev doma in v tujini, obveznosti do države in do delavcev.';
+    } else if (subtype == 'Pasivne časovne razmejitve') {
+      ret =
+          'Vnaprej vračunani stroški, torej odhodki, so stroški, s katerimi podjetje enakomerno obremenjuje svojo dejavnost ali zaloge oziroma odhodki, s katerimi enakomerno obremenjuje svoj poslovni izid. Niso se še pojavili so pa pričakovani.';
+    } else if (subtype == 'Osnovni kapital') {
+      ret =
+          'Je nominalno določen v družbeni pogodbi, statutu ali ali drugem ustanovnem aktu podjetja, vpisujejo ali vplačujejo ga lastniki v sodni register.';
+    } else if (subtype == 'Finančni kapital') {
+      ret = 'Čisto premoženje podjetja.';
+    } else if (subtype == 'Celotni kapital') {
+      ret =
+          'Osnovni kapital povečan za ves pripadajoči lastniški kapital in obveznost podjetja do lastnikov.';
+    } else if (subtype == 'Poslovni prihodki') {
+      ret =
+          'Prodajne vrednosti poslovnih učinkov, ki so dosežene v poslovnem letu, so zmnožek količine proizvodov in storitev s prodajnimi cenami.';
+    } else if (subtype == 'Finančni prihodki') {
+      ret =
+          'Obresti za dana posojila, zamujene obresti, dobljene dividende, prihodki od prodaje finančnih naložb, pozitivne tečajne razlike.';
+    } else if (subtype == 'Izredni prihodki') {
+      ret =
+          'Blagajniški ali inventurni presežki, izterjane odpisane terjatve, dobljene subvencije, dotacije, prejete kazni in odškodnine.';
+    } else if (subtype == 'Poslovni odhodki') {
+      ret =
+          'Stroški materiala, surovin, tujih in lastnih storitev, amortizacije, plače, nabavne vrednosti trgovskega blaga in druge.';
+    } else if (subtype == 'Prevrednotovalni odhodki') {
+      ret =
+          'Odpisi terjatev, izgube pri prodaji opredmetenih osnovnih sredstev, oslabitve sredstev in druge.';
+    } else if (subtype == 'Finančni odhodki') {
+      ret =
+          'Obresti za posojila, zamude obresti od dobaviteljev, negativne tečajne razlike, odhodki od prodaje finančnih naložb, povečanje dolgoročnih rezervacij, prevrednotovalni finančni odhodki.';
+    } else if (subtype == 'Izredni odhodki') {
+      ret =
+          'Blagajniški in inventurni manjki, kritje izgub iz preteklih let, denarne kazni in odškodnine, oblikovanje rezervacij za kritje možne izgube iz posameznih poslov in druge.';
     }
 
     return ret;
@@ -480,6 +545,8 @@ class _AccountFormChangerState extends State<AccountFormChanger> {
                         dropdownValue = value!;
                         spremenjeno = true;
                       });
+                      dropdownValue2notifier.value =
+                          returnSubtypeString(dropdownValue);
                     },
                   ),
                 ),
@@ -525,9 +592,14 @@ class _AccountFormChangerState extends State<AccountFormChanger> {
                 ),
                 Expanded(
                   child: Container(
+                    decoration: BoxDecoration(
+                        color: Color.fromRGBO(217, 234, 250, 0.2),
+                        borderRadius: BorderRadius.all(Radius.circular(
+                                5.0) //                 <--- border radius here
+                            ),
+                        border: Border.all(color: Colors.grey)),
                     width: 360,
                     padding: EdgeInsets.all(8.0),
-                    color: Color.fromRGBO(217, 234, 250, 0.2),
                     child: ValueListenableBuilder(
                       valueListenable: dropdownValue2notifier,
                       builder: (context, value, child) {
