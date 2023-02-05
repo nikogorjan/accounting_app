@@ -46,6 +46,7 @@ class _AccountFormChangerState extends State<AccountFormChanger> {
   final ValueNotifier<String> dropdownValue2notifier =
       ValueNotifier<String>('Default Text');
   late String dropdownValue2;
+  bool spremenjeno = false;
 
   List<String> returnSubType(String tip) {
     List<String> podtip = [];
@@ -103,6 +104,66 @@ class _AccountFormChangerState extends State<AccountFormChanger> {
     return podtip;
   }
 
+  String returnSubtypeString(String tip) {
+    if (spremenjeno == false) {
+      return widget.podtip;
+    } else {
+      String podtip = '';
+      List<String> stalnaSredstva = [
+        'Neopredmetena dolgoročna sredstva',
+        'Opredmetena osnovna sredstva',
+        'Dolgoročne finančne naložbe'
+      ];
+      List<String> gibljivaSredstva = [
+        'Zaloge',
+        'Kratkoročne terjatve iz poslovanja',
+        'Kratkoročne finančne naložbe',
+        'Denarna sredstva',
+        'Aktivne časovne omejitve'
+      ];
+      List<String> kapital = [
+        'Osnovni kapital',
+        'Finančni kapital',
+        'Celotni kapital',
+      ];
+      List<String> obveznosti = [
+        'Dolgoročne rezervacije',
+        'Dolgoročne obveznosti iz financiranja',
+        'Dolgoročne obveznosti iz poslovanja',
+        'Kratkoročne obveznosti iz financiranja',
+        'Kratkoročne obveznosti iz poslovanja',
+        'Pasivne časovne razmejitve'
+      ];
+      List<String> prihodki = [
+        'Poslovni prihodki',
+        'Finančni prihodki',
+        'Izredni prihodki',
+      ];
+      List<String> odhodki = [
+        'Poslovni odhodki',
+        'Prevrednotovalni odhodki',
+        'Finančni odhodki',
+        'Izredni odhodki'
+      ];
+
+      if (tip == 'Stalna sredstva') {
+        podtip = stalnaSredstva.first;
+      } else if (tip == 'Gibljiva sredstva') {
+        podtip = gibljivaSredstva.first;
+      } else if (tip == 'Kapital') {
+        podtip = kapital.first;
+      } else if (tip == 'Obveznosti') {
+        podtip = obveznosti.first;
+      } else if (tip == 'Prihodki') {
+        podtip = prihodki.first;
+      } else if (tip == 'Odhodki') {
+        podtip = odhodki.first;
+      }
+
+      return podtip;
+    }
+  }
+
   DateTime kontDate = DateTime.now();
   DateTime amortizacijaDate = DateTime.now();
 
@@ -144,6 +205,7 @@ class _AccountFormChangerState extends State<AccountFormChanger> {
     return ret;
   }
 
+  late String oldName;
   @override
   void initState() {
     _IDController.text = widget.ID;
@@ -151,6 +213,7 @@ class _AccountFormChangerState extends State<AccountFormChanger> {
     _bilancaController.text = widget.bilanca;
     _imeController.text = widget.ime;
     dropdownValue = widget.tip;
+    oldName = widget.ime;
     super.initState();
   }
 
@@ -415,6 +478,7 @@ class _AccountFormChangerState extends State<AccountFormChanger> {
                       // This is called when the user selects an item.
                       setState(() {
                         dropdownValue = value!;
+                        spremenjeno = true;
                       });
                     },
                   ),
@@ -432,7 +496,8 @@ class _AccountFormChangerState extends State<AccountFormChanger> {
                               BorderSide(color: Colors.grey, width: 0.5)),
                     ),
                     ////////////////////////////////////////////////////////////////////////////////////
-                    value: dropdownValue2 = widget.podtip,
+                    value: dropdownValue2 = returnSubtypeString(
+                        dropdownValue), //dropdownValue2 = widget.podtip,
                     elevation: 16,
                     style: const TextStyle(fontFamily: 'OpenSans'),
                     items: returnSubType(dropdownValue)
@@ -609,6 +674,10 @@ class _AccountFormChangerState extends State<AccountFormChanger> {
                               Kont NewAccount = Kont.fromJson(valueMap);
                               accounts.add(NewAccount);
                             }
+
+                            accounts.removeWhere(
+                                (element) => element.ime == oldName);
+
                             Kont kon;
                             if (dropdownValue == 'Stalna sredstva') {
                               kon = Kont(
@@ -635,6 +704,7 @@ class _AccountFormChangerState extends State<AccountFormChanger> {
                             }
 
                             accounts.add(kon);
+
                             List<String> kontiJson = [];
                             for (int i = 0; i < accounts.length; i++) {
                               kontiJson.add(jsonEncode(accounts[i]));
@@ -680,32 +750,10 @@ class _AccountFormChangerState extends State<AccountFormChanger> {
                               Kont NewAccount = Kont.fromJson(valueMap);
                               accounts.add(NewAccount);
                             }
-                            Kont kon;
-                            if (dropdownValue == 'Stalna sredstva') {
-                              kon = Kont(
-                                  ID: _IDController.text.trim(),
-                                  ime: _imeController.text.trim(),
-                                  tip: dropdownValue,
-                                  podtip: dropdownValue2,
-                                  bilanca: _bilancaController.text.trim(),
-                                  amortizacija:
-                                      _amortizacijaController.text.trim(),
-                                  bilancaDate: kontDate.toString(),
-                                  amortizacijaDate:
-                                      amortizacijaDate.toString());
-                            } else {
-                              kon = Kont(
-                                  ID: _IDController.text.trim(),
-                                  ime: _imeController.text.trim(),
-                                  tip: dropdownValue,
-                                  podtip: dropdownValue2,
-                                  bilanca: _bilancaController.text.trim(),
-                                  amortizacija: 'NULL',
-                                  bilancaDate: kontDate.toString(),
-                                  amortizacijaDate: 'NULL');
-                            }
 
-                            accounts.add(kon);
+                            accounts.removeWhere((element) =>
+                                element.ime == _imeController.text.trim());
+
                             List<String> kontiJson = [];
                             for (int i = 0; i < accounts.length; i++) {
                               kontiJson.add(jsonEncode(accounts[i]));
