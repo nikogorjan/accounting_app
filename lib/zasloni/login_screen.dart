@@ -24,6 +24,8 @@ class _HomeScreenState extends State<HomeScreen> {
       onTap: () => FocusScope.of(context).unfocus(),
       child: Scaffold(
         body: Responsive(
+          smallDesktop: LoginScreenDesktop(),
+          tablet: LoginScreenDesktop(),
           mobile: LoginScreenMobile(),
           desktop: LoginScreenDesktop(),
         ),

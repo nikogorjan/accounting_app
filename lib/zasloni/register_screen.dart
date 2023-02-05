@@ -17,6 +17,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Responsive(
+        smallDesktop: RegisterScreenDesktop(),
+        tablet: RegisterScreenDesktop(),
         mobile: RegisterScreenMobile(),
         desktop: RegisterScreenDesktop(),
       ),

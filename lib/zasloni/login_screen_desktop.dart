@@ -1,10 +1,12 @@
 //import 'dart:html';
 
 import 'package:accounting_app/zasloni/screens.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:accounting_app/data/data.dart';
 
 class LoginScreenDesktop extends StatefulWidget {
   const LoginScreenDesktop({super.key});
@@ -18,6 +20,9 @@ class _LoginScreenDesktopState extends State<LoginScreenDesktop> {
   final _passwordController = TextEditingController();
 
   Future signIn() async {
+    //global.email = _emailController.text.trim();
+    box.put('email', _emailController.text.trim());
+
     await FirebaseAuth.instance.signInWithEmailAndPassword(
       email: _emailController.text.trim(),
       password: _passwordController.text.trim(),
@@ -35,11 +40,17 @@ class _LoginScreenDesktopState extends State<LoginScreenDesktop> {
   Widget build(BuildContext context) {
     return Row(
       children: [
+        Flexible(
+            //flex: 1,
+            child: Container(
+          width: 380,
+          color: Colors.white,
+        )),
         Container(
-          width: 640,
+          width: 460,
           color: Colors.white,
           child: Padding(
-            padding: const EdgeInsets.fromLTRB(100, 220, 100, 0),
+            padding: const EdgeInsets.fromLTRB(0, 220, 100, 0),
             child: ListView(
               children: [
                 Column(
@@ -142,7 +153,7 @@ class _LoginScreenDesktopState extends State<LoginScreenDesktop> {
                                   fontFamily: 'OpenSans',
                                   fontSize: 16,
                                   fontWeight: FontWeight.bold),
-                            ))
+                            )),
                       ],
                     ),
                   ],
@@ -152,11 +163,12 @@ class _LoginScreenDesktopState extends State<LoginScreenDesktop> {
           ),
         ),
         Flexible(
+          flex: 3,
           child: Container(
-            width: double.infinity,
+            width: 1080, //double.infinity,
             decoration: const BoxDecoration(
               image: DecorationImage(
-                image: AssetImage('lib/sredstva/logo_centered.png'),
+                image: AssetImage('lib/sredstva/hotpot.png'),
                 fit: BoxFit.cover,
               ),
             ),

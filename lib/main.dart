@@ -1,11 +1,16 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-
+import 'objekti/hive_global.dart';
 import 'zasloni/screens.dart';
+import 'package:hive_flutter/hive_flutter.dart';
+import 'package:accounting_app/data/data.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await Hive.initFlutter();
+  box = await Hive.openBox('box');
+  Hive.registerAdapter(HiveGlobalAdapter());
 
   if (kIsWeb) {
     await Firebase.initializeApp(
