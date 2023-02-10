@@ -269,9 +269,17 @@ class _AccountFormState extends State<AccountForm> {
                 TextField(
                   controller: _IDController,
                   decoration: InputDecoration(
+                      focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(0),
+
+                        //<-- SEE HERE
+                        borderSide:
+                            BorderSide(width: 1, color: Colors.blueAccent),
+                      ),
                       enabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(5),
-                        borderSide: BorderSide(color: Colors.grey, width: 0.5),
+                        borderSide: BorderSide(
+                            width: 1, color: Colors.grey), //<-- SEE HERE
+                        borderRadius: BorderRadius.circular(0),
                       ),
                       hintText: 'ID',
                       hintStyle: TextStyle(
@@ -491,10 +499,18 @@ class _AccountFormState extends State<AccountForm> {
                   width: 360,
                   child: DropdownButtonFormField<String>(
                     decoration: InputDecoration(
+                      focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(0),
+
+                        //<-- SEE HERE
+                        borderSide:
+                            BorderSide(width: 1, color: Colors.blueAccent),
+                      ),
                       enabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(5),
-                          borderSide:
-                              BorderSide(color: Colors.grey, width: 0.5)),
+                        borderSide: BorderSide(
+                            width: 1, color: Colors.grey), //<-- SEE HERE
+                        borderRadius: BorderRadius.circular(0),
+                      ),
                     ),
                     value: dropdownValue,
                     elevation: 16,
@@ -526,10 +542,18 @@ class _AccountFormState extends State<AccountForm> {
                   width: 360,
                   child: DropdownButtonFormField<String>(
                     decoration: InputDecoration(
+                      focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(0),
+
+                        //<-- SEE HERE
+                        borderSide:
+                            BorderSide(width: 1, color: Colors.blueAccent),
+                      ),
                       enabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(5),
-                          borderSide:
-                              BorderSide(color: Colors.grey, width: 0.5)),
+                        borderSide: BorderSide(
+                            width: 1, color: Colors.grey), //<-- SEE HERE
+                        borderRadius: BorderRadius.circular(0),
+                      ),
                     ),
                     value: dropdownValue2 = returnSubType(dropdownValue).first,
                     elevation: 16,
@@ -562,7 +586,7 @@ class _AccountFormState extends State<AccountForm> {
                     decoration: BoxDecoration(
                         color: Color.fromRGBO(217, 234, 250, 0.2),
                         borderRadius: BorderRadius.all(Radius.circular(
-                                5.0) //                 <--- border radius here
+                                0) //                 <--- border radius here
                             ),
                         border: Border.all(color: Colors.grey)),
                     width: 360,
@@ -589,9 +613,17 @@ class _AccountFormState extends State<AccountForm> {
                 TextField(
                   controller: _bilancaController,
                   decoration: InputDecoration(
+                      focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(0),
+
+                        //<-- SEE HERE
+                        borderSide:
+                            BorderSide(width: 1, color: Colors.blueAccent),
+                      ),
                       enabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(5),
-                        borderSide: BorderSide(color: Colors.grey, width: 0.5),
+                        borderSide: BorderSide(
+                            width: 1, color: Colors.grey), //<-- SEE HERE
+                        borderRadius: BorderRadius.circular(0),
                       ),
                       hintText: 'Začetna bilanca',
                       hintStyle: TextStyle(
@@ -634,10 +666,17 @@ class _AccountFormState extends State<AccountForm> {
                   TextField(
                     controller: _amortizacijaController,
                     decoration: InputDecoration(
-                        enabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(5),
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(0),
+
+                          //<-- SEE HERE
                           borderSide:
-                              BorderSide(color: Colors.grey, width: 0.5),
+                              BorderSide(width: 1, color: Colors.blueAccent),
+                        ),
+                        enabledBorder: OutlineInputBorder(
+                          borderSide: BorderSide(
+                              width: 1, color: Colors.grey), //<-- SEE HERE
+                          borderRadius: BorderRadius.circular(0),
                         ),
                         hintText: 'Amortizacija',
                         hintStyle: TextStyle(
@@ -680,9 +719,17 @@ class _AccountFormState extends State<AccountForm> {
                 TextField(
                   controller: _imeController,
                   decoration: InputDecoration(
+                      focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(0),
+
+                        //<-- SEE HERE
+                        borderSide:
+                            BorderSide(width: 1, color: Colors.blueAccent),
+                      ),
                       enabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(5),
-                        borderSide: BorderSide(color: Colors.grey, width: 0.5),
+                        borderSide: BorderSide(
+                            width: 1, color: Colors.grey), //<-- SEE HERE
+                        borderRadius: BorderRadius.circular(0),
                       ),
                       hintText: 'Ime',
                       hintStyle: TextStyle(
