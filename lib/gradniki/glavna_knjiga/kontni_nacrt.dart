@@ -41,9 +41,12 @@ class _KontniNacrtState extends State<KontniNacrt> {
     return Container(
       padding: EdgeInsets.fromLTRB(0, 0, 50, 0),
       child: Column(children: [
+        SizedBox(
+          height: 20,
+        ),
         Row(
           children: [
-            Spacer(),
+            //Spacer(),
             ConstrainedBox(
               constraints:
                   const BoxConstraints.tightFor(width: 150, height: 50),
@@ -71,7 +74,7 @@ class _KontniNacrtState extends State<KontniNacrt> {
           ],
         ),
         SizedBox(
-          height: 20,
+          height: 40,
         ),
         SingleChildScrollView(
           scrollDirection: Axis.horizontal,
@@ -182,6 +185,9 @@ class _KontniNacrtState extends State<KontniNacrt> {
                     Kont NewAccount = Kont.fromJson(valueMap);
                     accounts.add(NewAccount);
                   }
+                  accounts.sort(
+                    (a, b) => a.ID.compareTo(b.ID),
+                  );
                   return Column(
                     children: [
                       for (int i = 0; i < accounts.length; i++) ...[

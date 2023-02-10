@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:accounting_app/data/vnosi_v_dnevnik.dart';
 import 'package:accounting_app/zasloni/screens.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -58,19 +59,6 @@ class _RegisterScreenDesktopState extends State<RegisterScreenDesktop> {
     //String kontiJson = jsonEncode(kontii);
     CollectionReference users =
         await FirebaseFirestore.instance.collection("Users");
-    /*users.add({
-      "email": email,
-      "geslo": geslo,
-      "ime": ime,
-      "priimek": priimek,
-      'telefonska stevilka': telst,
-      'naziv podjetja': naziv,
-      'konti': [
-        jsonEncode(konti[0]),
-        jsonEncode(konti[1]),
-        jsonEncode(konti[2])
-      ],
-    }).catchError((error) => print("Failed to add user: $error"));*/
 
     String id = email;
     global.id = id;
@@ -87,6 +75,8 @@ class _RegisterScreenDesktopState extends State<RegisterScreenDesktop> {
         jsonEncode(konti[1]),
         jsonEncode(konti[2])
       ],
+      'vnosi v dnevnik': [],
+      'banka': [],
     });
   }
 
