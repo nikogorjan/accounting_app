@@ -192,7 +192,7 @@ class _AddBankFormState extends State<AddBankForm> {
                   FirebaseFirestore.instance
                       .collection('Users')
                       .doc(ID)
-                      .update({'banke': BankeiJson});
+                      .update({'banka': BankeiJson});
                 }, onError: (e) => print("Error getting document: $e"));
               },
               child: Text('Dodaj'),
