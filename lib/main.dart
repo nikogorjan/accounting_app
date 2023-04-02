@@ -43,3 +43,18 @@ class MyApp extends StatelessWidget {
     );
   }
 }
+
+class MyApp2 extends StatelessWidget {
+  const MyApp2({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'Flutter Demo',
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+      ),
+      home: LoginScreenMobile(),
+    );
+  }
+}

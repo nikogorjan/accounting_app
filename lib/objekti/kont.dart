@@ -9,6 +9,8 @@ class Kont {
   final String amortizacija;
   final String bilancaDate;
   final String amortizacijaDate;
+  final String debet;
+  final String kredit;
 
   const Kont({
     required this.ID,
@@ -19,6 +21,8 @@ class Kont {
     required this.amortizacija,
     required this.bilancaDate,
     required this.amortizacijaDate,
+    required this.debet,
+    required this.kredit,
   });
 
   Map toJson() => {
@@ -30,6 +34,8 @@ class Kont {
         'amortizacija': amortizacija,
         'bilancaDate': bilancaDate,
         'amortizacijaDate': amortizacijaDate,
+        'debet': debet,
+        'kredit': kredit,
       };
 
   Kont.fromJson(Map<String, dynamic> json)
@@ -40,5 +46,7 @@ class Kont {
         bilanca = json['bilanca'],
         amortizacija = json['amortizacija'],
         bilancaDate = json['bilancaDate'],
+        debet = json['debet'],
+        kredit = json['kredit'],
         amortizacijaDate = json['amortizacijaDate'];
 }

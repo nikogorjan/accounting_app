@@ -19,12 +19,12 @@ class Transakcija {
 
   Map toJson() => {
         'ID': ID,
-        'ime': opis,
-        'tip': datum,
-        'podtip': kont,
-        'bilanca': prejemnikPlacila,
-        'amortizacija': prejeto,
-        'bilancaDate': placilo,
+        'opis': opis,
+        'datum': datum,
+        'kont': kont,
+        'prejemnikPlacila': prejemnikPlacila,
+        'prejeto': prejeto,
+        'placilo': placilo,
       };
 
   Transakcija.fromJson(Map<String, dynamic> json)

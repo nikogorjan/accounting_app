@@ -1,15 +1,20 @@
 import 'dart:convert';
+import 'dart:io';
+import 'dart:typed_data';
 
 import 'package:accounting_app/data/vnosi_v_dnevnik.dart';
+import 'package:accounting_app/services/storage_service.dart';
 import 'package:accounting_app/zasloni/screens.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:accounting_app/data/konti.dart';
 import 'package:accounting_app/data/data.dart';
+import 'package:universal_html/html.dart' as html;
 
 class RegisterScreenDesktop extends StatefulWidget {
   const RegisterScreenDesktop({super.key});
@@ -19,6 +24,62 @@ class RegisterScreenDesktop extends StatefulWidget {
 }
 
 class _RegisterScreenDesktopState extends State<RegisterScreenDesktop> {
+  final Storage storage = Storage();
+
+  Uint8List webImage = Uint8List(8);
+  File? _pickedImage;
+  String imagePath = '';
+  String imageName = '';
+  bool picked = false;
+
+  Color color = Colors.white;
+  int _enterCounter = 0;
+  int _exitCounter = 0;
+  double x = 0.0;
+  double y = 0.0;
+
+  void _incrementEnter(PointerEvent details) {
+    setState(() {
+      _enterCounter++;
+    });
+  }
+
+  void _incrementExit(PointerEvent details) {
+    setState(() {
+      color = Colors.white;
+      _exitCounter++;
+    });
+  }
+
+  void _updateLocation(PointerEvent details) {
+    setState(() {
+      color = Color.fromRGBO(217, 234, 250, 0.2);
+      x = details.position.dx;
+      y = details.position.dy;
+    });
+  }
+
+  String urldata = '';
+  late final file;
+  late final reader;
+
+  void uploadImage() {
+    //String ID = box.get('email');
+    var uploadInput = html.FileUploadInputElement()..accept = 'image/*';
+    uploadInput.click();
+    uploadInput.onChange.listen((event) {
+      file = uploadInput.files!.first;
+      reader = html.FileReader();
+      reader.readAsDataUrl(file);
+      reader.onLoad.listen((event) {
+        print('done');
+        urldata = reader.result as String;
+      });
+      //storage.uploadFile(file, _imeController.text.trim(), ID);
+      picked = true;
+    });
+  }
+
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
   final _confirmPasswordController = TextEditingController();
@@ -48,6 +109,10 @@ class _RegisterScreenDesktopState extends State<RegisterScreenDesktop> {
           _passwordController.text.trim(),
           _telController.text.trim(),
           _nazivController.text.trim());
+
+      storage.uploadFile(file, '_Logotip', _emailController.text.trim());
+
+      //createUserFolder(_emailController.text.trim());
     } else {
       showRed = true;
       setState(() {});
@@ -61,7 +126,7 @@ class _RegisterScreenDesktopState extends State<RegisterScreenDesktop> {
         await FirebaseFirestore.instance.collection("Users");
 
     String id = email;
-    global.id = id;
+    //global.id = id;
     users.doc(id).set({
       "email": email,
       "geslo": geslo,
@@ -77,7 +142,25 @@ class _RegisterScreenDesktopState extends State<RegisterScreenDesktop> {
       ],
       'vnosi v dnevnik': [],
       'banka': [],
+      'dobavitelji': [],
+      'predmeti': [],
+      'storitve': [],
+      'stroski': [],
+      'stranke': [],
+      'produkti in storitve': [],
+      'prodaja': [],
+      'projekti': [],
+      'planirane storitve': [],
+      'zaposleni': [],
+      'ure dela': [],
+      'place': []
     });
+  }
+
+  Future<void> createUserFolder(String email) async {
+    final storageReference = FirebaseStorage.instance.ref();
+    final myFolderReference = storageReference.child(email);
+    //myFolderReference.putData();
   }
 
   bool passwordConfirmed() {
@@ -129,7 +212,7 @@ class _RegisterScreenDesktopState extends State<RegisterScreenDesktop> {
                       ),
                     ),
                     SizedBox(
-                      height: 80,
+                      height: 20,
                     ),
                     TextFormField(
                       controller: _emailController,
@@ -236,7 +319,36 @@ class _RegisterScreenDesktopState extends State<RegisterScreenDesktop> {
                           )),
                     ),
                     SizedBox(
-                      height: 40,
+                      height: 30,
+                    ),
+                    Row(
+                      children: [
+                        GestureDetector(
+                          onTap: () {
+                            //_pickImage();
+                            uploadImage();
+                          },
+                          child: MouseRegion(
+                            cursor: SystemMouseCursors.click,
+                            onEnter: _incrementEnter,
+                            onHover: _updateLocation,
+                            onExit: _incrementExit,
+                            child: Container(
+                                height: 100,
+                                width: 100,
+                                color: color,
+                                child: picked == false
+                                    ? ImageIcon(
+                                        AssetImage('lib/sredstva/addimage.png'),
+                                        color: Colors.grey,
+                                      )
+                                    : Image.network(urldata)),
+                          ),
+                        )
+                      ],
+                    ),
+                    SizedBox(
+                      height: 20,
                     ),
                     SizedBox(
                       width: 460,

@@ -490,7 +490,9 @@ class _JournalEntryFormChangerState extends State<JournalEntryFormChanger> {
                           bilanca: novaBilancaDebet.toString(),
                           amortizacija: debet.amortizacija,
                           bilancaDate: debet.bilancaDate,
-                          amortizacijaDate: debet.amortizacijaDate);
+                          amortizacijaDate: debet.amortizacijaDate,
+                          debet: novaBilancaDebet.toString(),
+                          kredit: debet.kredit);
                       Kont newKredit = Kont(
                           ID: kredit.ID,
                           ime: kredit.ime,
@@ -499,7 +501,9 @@ class _JournalEntryFormChangerState extends State<JournalEntryFormChanger> {
                           bilanca: novaBilancaKredit.toString(),
                           amortizacija: kredit.amortizacija,
                           bilancaDate: kredit.bilancaDate,
-                          amortizacijaDate: kredit.amortizacijaDate);
+                          amortizacijaDate: kredit.amortizacijaDate,
+                          kredit: novaBilancaKredit.toString(),
+                          debet: kredit.debet);
 
                       accounts.add(newDebet);
                       accounts.add(newKredit);

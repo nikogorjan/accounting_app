@@ -808,8 +808,9 @@ class _AccountFormChangerState extends State<AccountFormChanger> {
                                   amortizacija:
                                       _amortizacijaController.text.trim(),
                                   bilancaDate: kontDate.toString(),
-                                  amortizacijaDate:
-                                      amortizacijaDate.toString());
+                                  amortizacijaDate: amortizacijaDate.toString(),
+                                  kredit: '0',
+                                  debet: '0');
                             } else {
                               kon = Kont(
                                   ID: _IDController.text.trim(),
@@ -819,7 +820,9 @@ class _AccountFormChangerState extends State<AccountFormChanger> {
                                   bilanca: _bilancaController.text.trim(),
                                   amortizacija: 'NULL',
                                   bilancaDate: kontDate.toString(),
-                                  amortizacijaDate: 'NULL');
+                                  amortizacijaDate: 'NULL',
+                                  kredit: '0',
+                                  debet: '0');
                             }
 
                             accounts.add(kon);

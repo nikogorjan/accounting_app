@@ -157,7 +157,7 @@ class _KontniNacrtState extends State<KontniNacrt> {
           height: 5,
         ),
         Divider(
-          height: 0,
+          height: 1,
         ),
         StreamBuilder(
             stream: _usersStream,
@@ -200,7 +200,7 @@ class _KontniNacrtState extends State<KontniNacrt> {
                           amortizacija: accounts[i].amortizacija,
                         ),
                         Divider(
-                          height: 0,
+                          height: 1,
                         )
                       ],
                     ],

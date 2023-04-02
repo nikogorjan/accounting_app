@@ -1,8 +1,13 @@
+import 'dart:convert';
+
 import 'package:accounting_app/gradniki/banka/delete_bank_button.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 
+import '../../data/data.dart';
 import '../../objekti/banka.dart';
 
 class BankCard extends StatefulWidget {
@@ -43,7 +48,58 @@ class _BankCardState extends State<BankCard> {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {},
+      onTap: () {
+        List<Banka> banke = [];
+        var db = FirebaseFirestore.instance;
+        String ID = box.get('email');
+        final docRef = db.collection("Users").doc(ID);
+        docRef.get().then((DocumentSnapshot doc) {
+          final data = doc.data() as Map<String, dynamic>;
+          List<dynamic> bankeJson = data['banka'];
+
+          for (int i = 0; i < bankeJson.length; i++) {
+            Map<String, dynamic> valueMap = json.decode(bankeJson[i]);
+            Banka NewAccount = Banka.fromJson(valueMap);
+            banke.add(NewAccount);
+          }
+
+          int index =
+              banke.indexWhere((element) => element.ID == widget.card.ID);
+          Banka old = banke[index];
+
+          banke[index] = Banka(
+              ID: old.ID,
+              ime: old.ime,
+              bilanca: old.bilanca,
+              transakcije: old.transakcije,
+              selected: true);
+
+          for (int k = 0; k < banke.length; k++) {
+            if (k == index) {
+              continue;
+            } else {
+              banke[k] = Banka(
+                  ID: banke[k].ID,
+                  ime: banke[k].ime,
+                  bilanca: banke[k].bilanca,
+                  transakcije: banke[k].transakcije,
+                  selected: false);
+            }
+          }
+
+          List<String> BankeiJson = [];
+          for (int i = 0; i < banke.length; i++) {
+            BankeiJson.add(jsonEncode(banke[i]));
+          }
+
+          FirebaseFirestore.instance
+              .collection('Users')
+              .doc(ID)
+              .update({'banka': BankeiJson});
+        });
+
+        global.card = widget.card.ID;
+      },
       child: MouseRegion(
         cursor: SystemMouseCursors.click,
         onEnter: _incrementEnter,

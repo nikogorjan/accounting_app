@@ -101,6 +101,7 @@ class _DeleteBankButtonState extends State<DeleteBankButton> {
         });
       },
       child: MouseRegion(
+        cursor: SystemMouseCursors.click,
         onEnter: _incrementEnter,
         onHover: _updateLocation,
         onExit: _incrementExit,

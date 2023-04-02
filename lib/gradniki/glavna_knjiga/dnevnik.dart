@@ -135,7 +135,7 @@ class _DnevnikState extends State<Dnevnik> {
             height: 5,
           ),
           Divider(
-            height: 0,
+            height: 1,
           ),
           StreamBuilder(
               stream: _usersStream,
@@ -173,7 +173,7 @@ class _DnevnikState extends State<Dnevnik> {
                         for (int i = 0; i < accounts.length; i++) ...[
                           JournalEntryRow(vnos: accounts[i]),
                           Divider(
-                            height: 0,
+                            height: 1,
                           )
                         ],
                       ],

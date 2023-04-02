@@ -12,6 +12,8 @@ final List<Kont> konti = [
     amortizacija: '0',
     bilancaDate: DateTime.now().toString(),
     amortizacijaDate: DateTime.now().toString(),
+    debet: '0',
+    kredit: '0',
   ),
   Kont(
     ID: '13',
@@ -22,6 +24,8 @@ final List<Kont> konti = [
     amortizacija: '0',
     bilancaDate: DateTime.now().toString(),
     amortizacijaDate: DateTime.now().toString(),
+    debet: '0',
+    kredit: '0',
   ),
   Kont(
     ID: '76',
@@ -32,5 +36,7 @@ final List<Kont> konti = [
     amortizacija: '0',
     bilancaDate: DateTime.now().toString(),
     amortizacijaDate: DateTime.now().toString(),
+    debet: '0',
+    kredit: '0',
   ),
 ];
