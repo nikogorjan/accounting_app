@@ -37,172 +37,155 @@ class _BalanceSheetState extends State<BalanceSheet> {
         ),
         Row(
           children: [
-            //Spacer(),
-            ConstrainedBox(
-              constraints:
-                  const BoxConstraints.tightFor(width: 150, height: 50),
-              child: ElevatedButton(
-                style: ButtonStyle(
-                    backgroundColor: MaterialStateProperty.all(Colors.black),
-                    padding: MaterialStateProperty.all(const EdgeInsets.all(0)),
-                    textStyle: MaterialStateProperty.all(const TextStyle(
-                        fontFamily: 'OpenSans',
-                        fontSize: 16,
-                        color: Colors.white))),
-                onPressed: () {
-                  List<Kont> accounts = [];
-                  PdfBalanceSheetApi balanceSheetApi = PdfBalanceSheetApi();
-                  BalanceSheetApi api = BalanceSheetApi();
-                  var db = FirebaseFirestore.instance;
-                  String ID = box.get('email');
-                  final docRef = db.collection("Users").doc(ID);
-                  docRef.get().then((DocumentSnapshot doc) {
-                    final data = doc.data() as Map<String, dynamic>;
-                    List<dynamic> accountsJson = data['konti'];
+            Expanded(
+              //width: 750,
+              child: Column(
+                children: [
+                  Row(
+                    children: [
+                      Text(
+                        'Bilanca stanja',
+                        style: TextStyle(
+                            fontFamily: 'OpenSans',
+                            fontWeight: FontWeight.bold,
+                            fontSize: 32),
+                      ),
+                    ],
+                  ),
+                  SizedBox(
+                    height: 20,
+                  ),
+                  Row(
+                    children: [
+                      Text(
+                        'Bilanca stanja nam pokaže na določen dan obračunskega obdobja premožensko sliko podjetja in je sestavljena v dvostopenski\nobliki - Ima dve med seboj uravnoteženi strani.\n\nNa eni strani bilance stanja so sredstva razvrščena po hitrosti obračanja med stalna in gibljiva. Na drugi strani so so postavke\nrazvrščene po obliki obveznosti do virov sredstev na kapital in dolgove. Temeljno načelo je, da lahko podjetje razpolaga le z\ntolikšnimi sredstvi, kolikor znašajo obveznosti zanje.',
+                        style: TextStyle(fontFamily: 'OpenSans', fontSize: 24),
+                      ),
+                    ],
+                  ),
+                  SizedBox(
+                    height: 20,
+                  ),
+                  Row(
+                    children: [
+                      ConstrainedBox(
+                        constraints: const BoxConstraints.tightFor(
+                            width: 150, height: 50),
+                        child: ElevatedButton(
+                          style: ButtonStyle(
+                              backgroundColor:
+                                  MaterialStateProperty.all(Colors.black),
+                              padding: MaterialStateProperty.all(
+                                  const EdgeInsets.all(0)),
+                              textStyle: MaterialStateProperty.all(
+                                  const TextStyle(
+                                      fontFamily: 'OpenSans',
+                                      fontSize: 16,
+                                      color: Colors.white))),
+                          onPressed: () {
+                            List<Kont> accounts = [];
+                            PdfBalanceSheetApi balanceSheetApi =
+                                PdfBalanceSheetApi();
+                            BalanceSheetApi api = BalanceSheetApi();
+                            var db = FirebaseFirestore.instance;
+                            String ID = box.get('email');
+                            final docRef = db.collection("Users").doc(ID);
+                            docRef.get().then((DocumentSnapshot doc) {
+                              final data = doc.data() as Map<String, dynamic>;
+                              List<dynamic> accountsJson = data['konti'];
 
-                    for (int i = 0; i < accountsJson.length; i++) {
-                      Map<String, dynamic> valueMap =
-                          json.decode(accountsJson[i]);
-                      Kont NewAccount = Kont.fromJson(valueMap);
-                      accounts.add(NewAccount);
-                    }
+                              for (int i = 0; i < accountsJson.length; i++) {
+                                Map<String, dynamic> valueMap =
+                                    json.decode(accountsJson[i]);
+                                Kont NewAccount = Kont.fromJson(valueMap);
+                                accounts.add(NewAccount);
+                              }
 
-                    for (int i = 0; i < accounts.length; i++) {
-                      balanceSheetApi.tAccounts.add(TAccount(
-                          name: accounts[i].ime,
-                          debit: double.parse(accounts[i].debet),
-                          credit: double.parse(accounts[i].kredit)));
-                    }
-                    balanceSheetApi.konti = accounts;
-                    balanceSheetApi.createPdf();
-                    //api.createPDF();
-                  });
-                },
-                child: Text(
-                  'Dodaj',
-                ),
+                              for (int i = 0; i < accounts.length; i++) {
+                                balanceSheetApi.tAccounts.add(TAccount(
+                                    name: accounts[i].ime,
+                                    debit: double.parse(accounts[i].debet),
+                                    credit: double.parse(accounts[i].kredit)));
+                              }
+                              balanceSheetApi.konti = accounts;
+                              balanceSheetApi.createPdf();
+                              //api.createPDF();
+                            });
+                          },
+                          child: Text(
+                            'Generiraj',
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  SizedBox(
+                    height: 20,
+                  ),
+                  Row(
+                    children: [
+                      Text(
+                        'Izkaz poslovnega izida',
+                        style: TextStyle(
+                            fontFamily: 'OpenSans',
+                            fontWeight: FontWeight.bold,
+                            fontSize: 32),
+                      ),
+                    ],
+                  ),
+                  SizedBox(
+                    height: 20,
+                  ),
+                  Row(
+                    children: [
+                      Text(
+                        'Izkaz poslovnega izida je temeljni računovodski izkaz, ki prikazuje, koliko prihodkov je podjetje ustvarilo, koliko je bilo odhodkov\nin kakšen je poslovni izid v poslovnem letu ali drugem poslovnem obdobju.',
+                        style: TextStyle(fontFamily: 'OpenSans', fontSize: 24),
+                      ),
+                    ],
+                  ),
+                  SizedBox(
+                    height: 20,
+                  ),
+                  Row(
+                    children: [
+                      ConstrainedBox(
+                        constraints: const BoxConstraints.tightFor(
+                            width: 150, height: 50),
+                        child: ElevatedButton(
+                          style: ButtonStyle(
+                              backgroundColor:
+                                  MaterialStateProperty.all(Colors.black),
+                              padding: MaterialStateProperty.all(
+                                  const EdgeInsets.all(0)),
+                              textStyle: MaterialStateProperty.all(
+                                  const TextStyle(
+                                      fontFamily: 'OpenSans',
+                                      fontSize: 16,
+                                      color: Colors.white))),
+                          onPressed: () {
+                            showDialog(
+                                context: context,
+                                builder: ((context) => AlertDialog(
+                                      //title: Text('Dodaj kont'),
+                                      content: IncomeStatementForm(),
+                                    )));
+                          },
+                          child: Text(
+                            'Generiraj',
+                          ),
+                        ),
+                      ),
+                    ],
+                  )
+                ],
               ),
-            )
+            ),
+
+            //Spacer(),
           ],
         ),
-        SizedBox(
-          height: 40,
-        ),
-        Row(
-          children: [
-            //Spacer(),
-            ConstrainedBox(
-              constraints:
-                  const BoxConstraints.tightFor(width: 150, height: 50),
-              child: ElevatedButton(
-                style: ButtonStyle(
-                    backgroundColor: MaterialStateProperty.all(Colors.black),
-                    padding: MaterialStateProperty.all(const EdgeInsets.all(0)),
-                    textStyle: MaterialStateProperty.all(const TextStyle(
-                        fontFamily: 'OpenSans',
-                        fontSize: 16,
-                        color: Colors.white))),
-                onPressed: () {
-                  showDialog(
-                      context: context,
-                      builder: ((context) => AlertDialog(
-                            //title: Text('Dodaj kont'),
-                            content: IncomeStatementForm(),
-                          )));
-                },
-                child: Text(
-                  'Dodaj income statement',
-                ),
-              ),
-            )
-          ],
-        ),
-        SizedBox(
-          height: 40,
-        ),
-        SingleChildScrollView(
-          scrollDirection: Axis.horizontal,
-          child: Row(
-            children: [
-              Container(
-                width: 300,
-                height: 30,
-                child: Align(
-                  alignment: Alignment.centerLeft,
-                  child: Text(
-                    'ID',
-                    style: TextStyle(
-                      fontFamily: 'OpenSans',
-                      fontSize: 16,
-                    ),
-                  ),
-                ),
-              ),
-              Container(
-                width: 300,
-                height: 30,
-                child: Align(
-                  alignment: Alignment.centerLeft,
-                  child: Text(
-                    'Ime',
-                    style: TextStyle(
-                      fontFamily: 'OpenSans',
-                      fontSize: 16,
-                    ),
-                  ),
-                ),
-              ),
-              Container(
-                width: 300,
-                height: 30,
-                child: Align(
-                  alignment: Alignment.centerLeft,
-                  child: Text(
-                    'Tip',
-                    style: TextStyle(
-                      fontFamily: 'OpenSans',
-                      fontSize: 16,
-                    ),
-                  ),
-                ),
-              ),
-              Container(
-                width: 300,
-                height: 30,
-                child: Align(
-                  alignment: Alignment.centerLeft,
-                  child: Text(
-                    'Podtip',
-                    style: TextStyle(
-                      fontFamily: 'OpenSans',
-                      fontSize: 16,
-                    ),
-                  ),
-                ),
-              ),
-              Container(
-                width: 300,
-                height: 30,
-                child: Align(
-                  alignment: Alignment.centerLeft,
-                  child: Text(
-                    'Bilanca',
-                    style: TextStyle(
-                      fontFamily: 'OpenSans',
-                      fontSize: 16,
-                    ),
-                  ),
-                ),
-              ),
-            ],
-          ),
-        ),
-        SizedBox(
-          height: 5,
-        ),
-        Divider(
-          height: 1,
-        ),
+
         /*StreamBuilder(
             stream: _usersStream,
             builder:

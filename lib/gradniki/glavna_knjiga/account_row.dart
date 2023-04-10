@@ -149,7 +149,7 @@ class _AccountRowState extends State<AccountRow> {
                   child: Align(
                     alignment: Alignment.centerLeft,
                     child: Text(
-                      widget.bilanca,
+                      double.parse(widget.bilanca).abs().toStringAsFixed(2),
                       style: TextStyle(
                         fontFamily: 'OpenSans',
                         fontSize: 12,

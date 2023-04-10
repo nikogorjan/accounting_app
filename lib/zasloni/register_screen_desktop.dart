@@ -129,17 +129,13 @@ class _RegisterScreenDesktopState extends State<RegisterScreenDesktop> {
     //global.id = id;
     users.doc(id).set({
       "email": email,
-      "geslo": geslo,
+      //"geslo": geslo,
       "ime": ime,
-      "priimek": priimek,
+      "naziv podjetja": naziv,
       'telefonska stevilka': telst,
-      'naziv podjetja': naziv,
+      'sedez podjetja': priimek,
       'id': id,
-      'konti': [
-        jsonEncode(konti[0]),
-        jsonEncode(konti[1]),
-        jsonEncode(konti[2])
-      ],
+      'konti': [],
       'vnosi v dnevnik': [],
       'banka': [],
       'dobavitelji': [],
@@ -265,7 +261,7 @@ class _RegisterScreenDesktopState extends State<RegisterScreenDesktop> {
                       controller: _imeController,
                       decoration: const InputDecoration(
                           border: UnderlineInputBorder(),
-                          labelText: 'Ime',
+                          labelText: 'Ime in priimek',
                           hintStyle: TextStyle(
                             fontFamily: 'OpenSans',
                             color: Color(0xA4A3A3A4),
@@ -280,7 +276,7 @@ class _RegisterScreenDesktopState extends State<RegisterScreenDesktop> {
                       controller: _priimekController,
                       decoration: const InputDecoration(
                           border: UnderlineInputBorder(),
-                          labelText: 'Priimek',
+                          labelText: 'Sedež podjetja',
                           hintStyle: TextStyle(
                             fontFamily: 'OpenSans',
                             color: Color(0xA4A3A3A4),

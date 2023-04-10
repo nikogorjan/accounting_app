@@ -161,7 +161,9 @@ class _BankCardState extends State<BankCard> {
                   child: Row(
                     children: [
                       Text(
-                        '€' + widget.card.bilanca,
+                        '€' +
+                            double.parse(widget.card.bilanca)
+                                .toStringAsFixed(2),
                         style: TextStyle(
                             fontFamily: 'OpenSans',
                             fontWeight: FontWeight.bold,

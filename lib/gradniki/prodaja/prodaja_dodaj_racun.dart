@@ -32,6 +32,7 @@ class ProdajaDodajRacun extends StatefulWidget {
 }
 
 class _ProdajaDodajRacunState extends State<ProdajaDodajRacun> {
+  String naslovPodjetja = '';
   String imeProdajalca = '';
   String firmaProdajalca = '';
   String _childText = '';
@@ -992,8 +993,9 @@ class _ProdajaDodajRacunState extends State<ProdajaDodajRacun> {
                           final data = doc.data() as Map<String, dynamic>;
                           List<dynamic> prodajaJson = data['prodaja'];
 
-                          imeProdajalca = data['ime'] + ' ' + data['priimek'];
+                          imeProdajalca = data['ime'];
                           firmaProdajalca = data['naziv podjetja'];
+                          naslovPodjetja = data['sedez podjetja'];
 
                           for (int i = 0; i < prodajaJson.length; i++) {
                             Map<String, dynamic> valueMap =
@@ -1754,7 +1756,8 @@ class _ProdajaDodajRacunState extends State<ProdajaDodajRacun> {
                               racun: novaProdaja,
                               stranka: stranka,
                               izdajateljIme: imeProdajalca,
-                              izdajateljPodjetje: firmaProdajalca);
+                              izdajateljPodjetje: firmaProdajalca,
+                              sedezPodjetja: naslovPodjetja);
                           Storage storage = Storage();
 
                           await storage.getData(

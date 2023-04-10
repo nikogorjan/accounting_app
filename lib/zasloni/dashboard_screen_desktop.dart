@@ -82,15 +82,6 @@ class _DashboardScreenDesktopState extends State<DashboardScreenDesktop> {
                           child: Row(
                             children: [
                               Spacer(),
-                              Container(
-                                padding: const EdgeInsets.fromLTRB(0, 0, 50, 0),
-                                child: ElevatedButton(
-                                    onPressed: () {
-                                      box.delete('email');
-                                      FirebaseAuth.instance.signOut();
-                                    },
-                                    child: Text('izpis')),
-                              ),
                             ],
                           ),
                         )),

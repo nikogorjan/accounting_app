@@ -1,6 +1,13 @@
+import 'package:accounting_app/gradniki/nadzorna_plosca/grafi/banka_carousel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
+
+import 'grafi/gibanje_kapitala_graf.dart';
+import 'grafi/odhodki_graf.dart';
+import 'grafi/poslovni_izid_graf.dart';
+import 'grafi/prodaje_graf.dart';
+import 'grafi/racuni_graf.dart';
 
 class NadzornaPloscaDesktop extends StatefulWidget {
   const NadzornaPloscaDesktop({super.key});
@@ -38,6 +45,7 @@ class _NadzornaPloscaDesktopState extends State<NadzornaPloscaDesktop> {
                         width: 400,
                         height: 400,
                         color: Colors.black,
+                        child: BankaCarousel(),
                       )
                     ],
                   )),
@@ -55,6 +63,7 @@ class _NadzornaPloscaDesktopState extends State<NadzornaPloscaDesktop> {
                         width: 400,
                         height: 400,
                         color: Color(0xEEEEEEEE).withOpacity(0.5),
+                        child: PoslovniIzidGraf(),
                       )
                     ],
                   )),
@@ -72,6 +81,7 @@ class _NadzornaPloscaDesktopState extends State<NadzornaPloscaDesktop> {
                         width: 400,
                         height: 400,
                         color: Color(0xEEEEEEEE).withOpacity(0.5),
+                        child: OdhodkiGraf(),
                       )
                     ],
                   ))
@@ -93,6 +103,7 @@ class _NadzornaPloscaDesktopState extends State<NadzornaPloscaDesktop> {
                         width: 400,
                         height: 400,
                         color: Color(0xEEEEEEEE).withOpacity(0.5),
+                        child: GibanjeKapitala(),
                       )
                     ],
                   )),
@@ -107,6 +118,7 @@ class _NadzornaPloscaDesktopState extends State<NadzornaPloscaDesktop> {
                         width: 400,
                         height: 400,
                         color: Color(0xEEEEEEEE).withOpacity(0.5),
+                        child: ProdajeGraf(),
                       )
                     ],
                   )),
@@ -121,6 +133,7 @@ class _NadzornaPloscaDesktopState extends State<NadzornaPloscaDesktop> {
                         width: 400,
                         height: 400,
                         color: Color(0xEEEEEEEE).withOpacity(0.5),
+                        child: RacuniGraf(),
                       )
                     ],
                   ))

@@ -104,7 +104,7 @@ class PdfInvoiceApi {
           Text(invoice.izdajateljIme,
               style: TextStyle(fontWeight: FontWeight.bold)),
           SizedBox(height: 1 * PdfPageFormat.mm),
-          Text(invoice.izdajateljPodjetje),
+          Text(invoice.sedezPodjetja),
         ],
       );
 

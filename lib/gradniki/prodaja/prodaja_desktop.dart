@@ -25,7 +25,7 @@ class _ProdajaDesktopState extends State<ProdajaDesktop> {
           Align(
             alignment: Alignment.centerLeft,
             child: Text(
-              'Stroški',
+              'Prodaja',
               style: TextStyle(fontFamily: 'OpenSans', fontSize: 36),
             ),
           ),

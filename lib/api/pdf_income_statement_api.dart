@@ -31,6 +31,9 @@ class PdfIncomeStatement {
   List<Kont> drugiPrihodki = [];
 
   List<Kont> drugiOdhodki = [];
+  String davki = '';
+  late Kont davek;
+  List<Kont> daveklist = [];
 
   Future<void> createPdf() async {
     separateIncomeandExpenses();
@@ -85,6 +88,9 @@ class PdfIncomeStatement {
             amortizacijaDate: 'amortizacijaDate',
             debet: '0',
             kredit: '0'));
+      } else if (konti[i].ime == davki) {
+        davek = konti[i];
+        daveklist.add(davek);
       }
     }
   }
@@ -168,6 +174,8 @@ class PdfIncomeStatement {
         buildRevenueExpenses(financniOdhodki),
         buildRevenueExpenses(drugiPrihodki),
         buildRevenueExpenses(drugiOdhodki),
+        buildTaxTable(),
+        buildTax()
       ]);
 
   static pw.Widget buildRevenueExpenses(List<Kont> konti) {
@@ -263,17 +271,21 @@ class PdfIncomeStatement {
         odhodkiSkupaj += vrednost;
       }
 
-      double skupnaVrednost = prihodkiSkupaj - odhodkiSkupaj;
+      double skupna = prihodkiSkupaj - odhodkiSkupaj;
+      double skupnaVrednost = 0;
       String tip = '';
       if (prihodki[0].podtip == 'Poslovni prihodki') {
         tip = 'Dobiček iz poslovanja';
-        poslovanje = skupnaVrednost;
+        poslovanje = skupna;
+        skupnaVrednost = poslovanje;
       } else if (prihodki[0].podtip == 'Finančni prihodki') {
         tip = 'Dobiček iz rednega delovanja';
-        rednoDelovanje = skupnaVrednost;
+        rednoDelovanje = skupna;
+        skupnaVrednost = poslovanje + rednoDelovanje;
       } else {
         tip = 'Celotni dobiček';
-        celotniDobicek = skupnaVrednost;
+        celotniDobicek = skupna;
+        skupnaVrednost = poslovanje + rednoDelovanje + celotniDobicek;
       }
 
       return pw.Container(
@@ -288,5 +300,85 @@ class PdfIncomeStatement {
         ]),
       );
     }
+  }
+
+  pw.Widget buildTaxTable() {
+    final headers = [];
+    String tip = 'Davek iz dobička';
+    headers.add(tip);
+
+    double skupnaVrednost = 0;
+
+    final data = daveklist.map((item) {
+      double debet = double.parse(item.debet);
+      double kredit = double.parse(item.kredit);
+      double vrednost;
+      if (debet > kredit) {
+        vrednost = debet - kredit;
+      } else {
+        vrednost = kredit - debet;
+      }
+      skupnaVrednost += vrednost;
+      return [item.ime, vrednost.toStringAsFixed(2)];
+    }).toList();
+
+    return pw.Column(children: [
+      pw.Table.fromTextArray(
+        headers: headers,
+        data: data,
+        border: null,
+        headerStyle: pw.TextStyle(fontWeight: pw.FontWeight.bold),
+        headerDecoration: pw.BoxDecoration(color: PdfColors.grey300),
+        //cellStyle: pw.TextStyle(font: ttf),
+        cellHeight: 30,
+        cellAlignments: {
+          0: pw.Alignment.centerLeft,
+          1: pw.Alignment.centerRight,
+        },
+      ),
+      pw.Row(children: [
+        pw.Spacer(),
+        pw.Container(
+          width: 2 * PdfPageFormat.cm,
+          decoration: pw.BoxDecoration(
+            border: pw.Border(
+              bottom: pw.BorderSide(color: PdfColors.black),
+            ),
+          ),
+        ),
+      ]),
+      pw.SizedBox(height: 0.3 * PdfPageFormat.cm),
+      pw.Row(children: [
+        pw.Text('    Skupaj '),
+        pw.Spacer(),
+        pw.Text(skupnaVrednost.toStringAsFixed(2)),
+      ]),
+      pw.SizedBox(height: 0.3 * PdfPageFormat.cm),
+    ]);
+  }
+
+  pw.Widget buildTax() {
+    double skupnaVrednost = poslovanje + rednoDelovanje + celotniDobicek;
+    String tip = 'Čisti dobiček';
+    double debet = double.parse(davek.debet);
+    double kredit = double.parse(davek.kredit);
+    double vrednost;
+    if (debet > kredit) {
+      vrednost = debet - kredit;
+    } else {
+      vrednost = kredit - debet;
+    }
+    skupnaVrednost = skupnaVrednost - vrednost;
+    return pw.Container(
+      padding: pw.EdgeInsets.fromLTRB(10, 0, 10, 0),
+      color: PdfColors.blue100,
+      height: 30,
+      child: pw.Row(children: [
+        pw.Text(tip, style: pw.TextStyle(fontWeight: pw.FontWeight.bold)),
+        pw.Spacer(),
+        pw.Text(skupnaVrednost.toStringAsFixed(2),
+            style: pw.TextStyle(fontWeight: pw.FontWeight.bold)),
+      ]),
+    );
   }
 }

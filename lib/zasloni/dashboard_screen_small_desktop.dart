@@ -82,14 +82,6 @@ class _DashboardScreenSmallDesktopState
                           child: Row(
                             children: [
                               Spacer(),
-                              Container(
-                                padding: const EdgeInsets.fromLTRB(0, 0, 50, 0),
-                                child: ElevatedButton(
-                                    onPressed: () {
-                                      FirebaseAuth.instance.signOut();
-                                    },
-                                    child: Text('izpis')),
-                              ),
                             ],
                           ),
                         ),

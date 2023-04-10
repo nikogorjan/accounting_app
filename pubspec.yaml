@@ -44,11 +44,14 @@ dependencies:
   universal_html: ^2.0.9
   pdf: ^3.9.0
   path_provider: ^2.0.13
-  syncfusion_flutter_pdfviewer: ^20.4.52
+  syncfusion_flutter_pdfviewer: ^21.1.38
   google_fonts: ^4.0.3
-  syncfusion_flutter_pdf: ^20.4.54
   printing: ^5.10.3
   http: ^0.13.5
+  dots_indicator: ^2.1.0
+  syncfusion_flutter_core: ^21.1.38
+  syncfusion_flutter_charts: ^21.1.38
+  url_launcher: ^6.1.10
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.2
@@ -94,6 +97,8 @@ flutter:
     - lib/sredstva/transakcije.png
     - lib/sredstva/addimage.png
     - lib/sredstva/check.png
+    - lib/sredstva/logout.png
+    - lib/sredstva/menu.png
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
 

@@ -21,6 +21,8 @@ class _LoginScreenMobileState extends State<LoginScreenMobile> {
   Future signIn() async {
     //global.email = _emailController.text.trim();
     _emailController.text.trim();
+    box.put('email', _emailController.text.trim());
+
     await FirebaseAuth.instance.signInWithEmailAndPassword(
       email: _emailController.text.trim(),
       password: _passwordController.text.trim(),

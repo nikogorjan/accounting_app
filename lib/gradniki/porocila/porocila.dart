@@ -37,7 +37,7 @@ class _PorocilaDesktopState extends State<PorocilaDesktop> {
                     },
                     child: Align(
                       alignment: Alignment.centerLeft,
-                      child: Text('Kontni načrt',
+                      child: Text('Poročila',
                           style: TextStyle(
                               fontFamily: 'OpenSans',
                               fontSize: 24,
@@ -46,21 +46,6 @@ class _PorocilaDesktopState extends State<PorocilaDesktop> {
               ),
               SizedBox(
                 width: 20,
-              ),
-              Container(
-                height: 50,
-                child: TextButton(
-                    onPressed: () {
-                      //global.glavnaKnjigaIndex.value = 1;
-                    },
-                    child: Align(
-                      alignment: Alignment.centerLeft,
-                      child: Text('Dnevnik',
-                          style: TextStyle(
-                              fontFamily: 'OpenSans',
-                              fontSize: 24,
-                              color: Colors.black)),
-                    )),
               ),
             ],
           ),

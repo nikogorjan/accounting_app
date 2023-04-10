@@ -18,6 +18,10 @@ class IncomeStatementForm extends StatefulWidget {
 }
 
 class _IncomeStatementFormState extends State<IncomeStatementForm> {
+  String dropdownValue = '';
+  bool changed = false;
+  String kontKapital = '';
+
   DateTime date1 = DateTime.now();
   DateTime date2 = DateTime.now();
   void _showDatePicker() {
@@ -138,6 +142,118 @@ class _IncomeStatementFormState extends State<IncomeStatementForm> {
           SizedBox(
             height: 20,
           ),
+          SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+              child: Align(
+                alignment: Alignment.centerLeft,
+                child: Container(
+                  height: 30,
+                  width: 460,
+                  child: Text('KONT DAVKOV'),
+                ),
+              )),
+          SingleChildScrollView(
+            scrollDirection: Axis.horizontal,
+            child: Row(
+              children: [
+                Container(
+                  height: 50,
+                  width: 460,
+                  child: SizedBox(
+                      width: 310,
+                      child: StreamBuilder<QuerySnapshot>(
+                        stream: _usersStream,
+                        builder: (BuildContext context,
+                            AsyncSnapshot<QuerySnapshot> snapshot) {
+                          if (snapshot.hasError) {
+                            return Text("Something went wrong");
+                          }
+
+                          if (snapshot.connectionState ==
+                              ConnectionState.waiting) {
+                            return Text("Loading");
+                          }
+
+                          return ListView(
+                            children: snapshot.data!.docs
+                                .map((DocumentSnapshot document) {
+                              Map<String, dynamic> data =
+                                  document.data()! as Map<String, dynamic>;
+
+                              List<dynamic> accountsJson = data['konti'];
+                              List<Kont> accounts = [];
+                              List<String> accountNames = [];
+                              for (int i = 0; i < accountsJson.length; i++) {
+                                Map<String, dynamic> valueMap =
+                                    json.decode(accountsJson[i]);
+                                Kont NewAccount = Kont.fromJson(valueMap);
+                                accounts.add(NewAccount);
+                              }
+
+                              for (int j = 0; j < accounts.length; j++) {
+                                String str = accounts[j].ime;
+                                accountNames.add(str);
+                              }
+                              dropdownValue = accountNames.first;
+                              if (changed == false) {
+                                kontKapital = dropdownValue;
+                              }
+                              //debetItem = dropdownValue;
+
+                              return Container(
+                                width: 310,
+                                height: 50,
+                                child: DropdownButtonFormField<String>(
+                                  decoration: InputDecoration(
+                                    focusedBorder: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(0),
+
+                                      //<-- SEE HERE
+                                      borderSide: BorderSide(
+                                          width: 1, color: Colors.blueAccent),
+                                    ),
+                                    enabledBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                          width: 1,
+                                          color: Colors.grey), //<-- SEE HERE
+                                      borderRadius: BorderRadius.circular(0),
+                                    ),
+                                  ),
+                                  value: dropdownValue,
+                                  elevation: 16,
+                                  style:
+                                      const TextStyle(fontFamily: 'OpenSans'),
+                                  items: accountNames
+                                      .map<DropdownMenuItem<String>>(
+                                          (String value) {
+                                    return DropdownMenuItem<String>(
+                                      value: value,
+                                      child: Text(
+                                        value,
+                                        style: TextStyle(
+                                            fontFamily: 'OpenSans',
+                                            color: Colors.black),
+                                      ),
+                                    );
+                                  }).toList(),
+                                  onChanged: (String? value) {
+                                    // This is called when the user selects an item.
+                                    setState(() {
+                                      dropdownValue = value!;
+                                    });
+                                    kontKapital = dropdownValue;
+                                    changed = true;
+                                  },
+                                ),
+                              );
+                            }).toList(),
+                          );
+                        },
+                      )),
+                )
+              ],
+            ),
+          ),
           SizedBox(
             height: 20,
           ),
@@ -176,6 +292,7 @@ class _IncomeStatementFormState extends State<IncomeStatementForm> {
                     vnosi.add(NewAccount);
                   }
 
+                  api.davki = kontKapital;
                   api.date1 = date1;
                   api.date2 = date2;
                   api.konti = accounts;

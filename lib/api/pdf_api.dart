@@ -1,16 +1,22 @@
 import 'dart:io';
 
+import 'package:accounting_app/services/storage_service.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/material.dart' as mat;
+
 import 'package:flutter/services.dart';
 import 'package:path_provider/path_provider.dart';
-import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
 import 'package:universal_html/html.dart' as html;
+import 'package:url_launcher/url_launcher.dart';
+
+import '../data/data.dart';
 
 class PdfApi {
+  Storage storage = Storage();
   static Future<File> saveDocument({
     required String name,
     required Document pdf,
@@ -24,12 +30,31 @@ class PdfApi {
       final newWindow = html.window.open(url, '_blank');
     } else {
       dir = await getApplicationDocumentsDirectory();
+      String path = '${dir.path}/$name';
       file = File('${dir.path}/$name');
+      await file.writeAsBytes(await pdf.save());
+      box.put('data', path);
+      /*try {
+        await file.writeAsBytes(await pdf.save());
+        return file;
+      } catch (e) {
+        debugPrint('$e');
+      }
 
-      await file.writeAsBytes(bytes);
+      final uri = Uri.parse(path);
+
+      if (await canLaunchUrl(uri)) {
+        await launchUrl(uri);
+      } else {
+        throw 'Could not launch $path';
+      }*/
     }
 
     return file;
+  }
+
+  void upload(String path, String name) {
+    storage.UploadFileMobile(path, name, box.get('email'));
   }
 
   void openPdfInNewWindow(Uint8List pdf) {
@@ -37,4 +62,10 @@ class PdfApi {
     final url = html.Url.createObjectUrlFromBlob(blob);
     final newWindow = html.window.open(url, '_blank');
   }
+
+  /*static Future openFile(File file) async {
+    final url = file.path;
+
+    await OpenFile.open(url);
+  }*/
 }

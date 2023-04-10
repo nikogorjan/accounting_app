@@ -10,6 +10,7 @@ import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:uuid/uuid.dart';
 
 import '../../data/data.dart';
+import '../../objekti/banka.dart';
 
 class JournalEntryForm extends StatefulWidget {
   const JournalEntryForm({super.key});
@@ -433,6 +434,14 @@ class _JournalEntryFormState extends State<JournalEntryForm> {
                   final data = doc.data() as Map<String, dynamic>;
                   List<dynamic> accountsJson = data['konti'];
                   List<dynamic> vnosiJson = data['vnosi v dnevnik'];
+                  List<Banka> banke = [];
+                  List<dynamic> bankeJson = data['banka'];
+
+                  for (int i = 0; i < bankeJson.length; i++) {
+                    Map<String, dynamic> valueMap = json.decode(bankeJson[i]);
+                    Banka NewAccount = Banka.fromJson(valueMap);
+                    banke.add(NewAccount);
+                  }
 
                   for (int i = 0; i < accountsJson.length; i++) {
                     Map<String, dynamic> valueMap =
@@ -471,22 +480,26 @@ class _JournalEntryFormState extends State<JournalEntryForm> {
                       ime: debet.ime,
                       tip: debet.tip,
                       podtip: debet.podtip,
-                      bilanca: novaBilancaDebet.toString(),
+                      bilanca: (double.parse(debet.bilanca) + bilancaDouble)
+                          .toString(),
                       amortizacija: debet.amortizacija,
                       bilancaDate: debet.bilancaDate,
                       amortizacijaDate: debet.amortizacijaDate,
                       kredit: debet.kredit,
-                      debet: novaBilancaDebet.toString());
+                      debet: (double.parse(debet.debet) + bilancaDouble)
+                          .toString());
                   Kont newKredit = Kont(
                       ID: kredit.ID,
                       ime: kredit.ime,
                       tip: kredit.tip,
                       podtip: kredit.podtip,
-                      bilanca: novaBilancaKredit.toString(),
+                      bilanca: (double.parse(kredit.bilanca) - bilancaDouble)
+                          .toString(),
                       amortizacija: kredit.amortizacija,
                       bilancaDate: kredit.bilancaDate,
                       amortizacijaDate: kredit.amortizacijaDate,
-                      kredit: novaBilancaDebet.toString(),
+                      kredit: (double.parse(kredit.kredit) + bilancaDouble)
+                          .toString(),
                       debet: kredit.debet);
 
                   accounts.add(newDebet);
@@ -514,11 +527,36 @@ class _JournalEntryFormState extends State<JournalEntryForm> {
                     kontiJson.add(jsonEncode(accounts[i]));
                   }
 
+                  for (int i = 0; i < banke.length; i++) {
+                    for (int j = 0; j < accounts.length; j++) {
+                      if (banke[i].ime == accounts[j].ime) {
+                        Banka old = banke[i];
+                        banke[i] = Banka(
+                            ID: old.ID,
+                            ime: old.ime,
+                            bilanca: (double.parse(accounts[j].bilanca).abs())
+                                .toString(),
+                            transakcije: old.transakcije,
+                            selected: old.selected);
+                      }
+                    }
+                  }
+
+                  List<String> bankiceJson = [];
+                  for (int i = 0; i < banke.length; i++) {
+                    bankiceJson.add(jsonEncode(banke[i]));
+                  }
+
                   String ID = box.get('email');
                   FirebaseFirestore.instance
                       .collection('Users')
                       .doc(ID)
                       .update({'konti': kontiJson});
+
+                  FirebaseFirestore.instance
+                      .collection('Users')
+                      .doc(ID)
+                      .update({'banka': bankiceJson});
 
                   FirebaseFirestore.instance
                       .collection('Users')
