@@ -21,18 +21,12 @@ class _DashboardState extends State<Dashboard> {
   Widget build(BuildContext context) {
     return Scaffold(
       key: _key,
-      /*appBar: Responsive.isMobile(context)
-          ? AppBar(
-              backgroundColor: Colors.black,
-              elevation: 0.0,
-            )
-          : null,*/
       drawer: Responsive.isMobile(context) ? DrawerMenu() : null,
       body: StreamBuilder<User?>(
         stream: FirebaseAuth.instance.authStateChanges(),
         builder: (context, snapshot) {
           if (snapshot.hasData) {
-            return Responsive(
+            return const Responsive(
                 smallDesktop: DashboardScreenSmallDesktop(),
                 tablet: DashboardScreenTablet(),
                 mobile: DashboardScreenMobile(),

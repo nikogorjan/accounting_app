@@ -124,7 +124,7 @@ class _ItemRowMobileState extends State<ItemRowMobile> {
             child: Align(
               alignment: Alignment.centerLeft,
               child: Text(
-                widget.predmet.bilanca,
+                double.parse(widget.predmet.bilanca).toStringAsFixed(2),
                 style: TextStyle(
                   fontFamily: 'OpenSans',
                   fontSize: 11,

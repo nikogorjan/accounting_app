@@ -111,7 +111,7 @@ class _RacunRowState extends State<RacunRow> {
                     child: Row(
                       children: [
                         Text(
-                          widget.rc.bilanca,
+                          double.parse(widget.rc.bilanca).toStringAsFixed(2),
                           style: TextStyle(
                             fontFamily: 'OpenSans',
                             fontSize: 12,

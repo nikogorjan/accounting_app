@@ -50,6 +50,7 @@ class _ItemRowState extends State<ItemRow> {
   late String data;
   late String ID;
   late String path;
+
   @override
   void initState() {
     ID = box.get('email');
@@ -169,7 +170,7 @@ class _ItemRowState extends State<ItemRow> {
                     child: Align(
                       alignment: Alignment.centerLeft,
                       child: Text(
-                        widget.predmet.bilanca,
+                        double.parse(widget.predmet.bilanca).toStringAsFixed(2),
                         style: TextStyle(
                           fontFamily: 'OpenSans',
                           fontSize: 16,

@@ -1,18 +1,18 @@
 import 'package:flutter/material.dart';
 
 class Kont {
-  final String ID;
-  final String ime;
-  final String tip;
-  final String podtip;
-  final String bilanca;
-  final String amortizacija;
-  final String bilancaDate;
-  final String amortizacijaDate;
-  final String debet;
-  final String kredit;
+  String ID;
+  String ime;
+  String tip;
+  String podtip;
+  String bilanca;
+  String amortizacija;
+  String bilancaDate;
+  String amortizacijaDate;
+  String debet;
+  String kredit;
 
-  const Kont({
+  Kont({
     required this.ID,
     required this.ime,
     required this.tip,
@@ -24,6 +24,19 @@ class Kont {
     required this.debet,
     required this.kredit,
   });
+
+  void changeBalance(double debet, double kredit) {
+    this.kredit = (double.parse(this.kredit) + kredit).toString();
+    this.debet = (double.parse(this.debet) + debet).toString();
+    double balance = 0;
+    if (double.parse(this.kredit) > double.parse(this.debet)) {
+      balance = double.parse(this.kredit) - double.parse(this.debet);
+    } else {
+      balance = double.parse(this.debet) - double.parse(this.kredit);
+    }
+
+    this.bilanca = balance.toString();
+  }
 
   Map toJson() => {
         'ID': ID,

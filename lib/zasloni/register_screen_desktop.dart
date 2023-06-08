@@ -75,7 +75,6 @@ class _RegisterScreenDesktopState extends State<RegisterScreenDesktop> {
         print('done');
         urldata = reader.result as String;
       });
-      //storage.uploadFile(file, _imeController.text.trim(), ID);
       picked = true;
     });
   }
@@ -121,15 +120,12 @@ class _RegisterScreenDesktopState extends State<RegisterScreenDesktop> {
 
   Future<void> addUserDetails(String ime, String priimek, String email,
       String geslo, String telst, String naziv) async {
-    //String kontiJson = jsonEncode(kontii);
     CollectionReference users =
         await FirebaseFirestore.instance.collection("Users");
 
     String id = email;
-    //global.id = id;
     users.doc(id).set({
       "email": email,
-      //"geslo": geslo,
       "ime": ime,
       "naziv podjetja": naziv,
       'telefonska stevilka': telst,
@@ -416,7 +412,7 @@ class _RegisterScreenDesktopState extends State<RegisterScreenDesktop> {
             width: 1080, //double.infinity,
             decoration: const BoxDecoration(
               image: DecorationImage(
-                image: AssetImage('lib/sredstva/hotpot.png'),
+                image: AssetImage('lib/sredstva/ai1.png'),
                 fit: BoxFit.cover,
               ),
             ),

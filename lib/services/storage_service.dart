@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:flutter/foundation.dart';
 import 'dart:typed_data';
 import 'package:flutter/material.dart';
 
@@ -14,6 +15,22 @@ class Storage {
       final storageRef =
           storage.ref('users').child('${fileOwner}/images/${fileName}.png');
       final uploadTask = storageRef.putBlob(file);
+    } on FirebaseException catch (e) {
+      print(e);
+    }
+  }
+
+  Future<void> uploadFileToStorage(
+      var file, String fileName, String fileOwner) async {
+    try {
+      final storage = FirebaseStorage.instance;
+      final storageRef =
+          storage.ref('users').child('${fileOwner}/images/${fileName}.png');
+      if (kIsWeb) {
+        final uploadTask = storageRef.putBlob(file);
+      } else {
+        final uploadTask = storageRef.putFile(file);
+      }
     } on FirebaseException catch (e) {
       print(e);
     }

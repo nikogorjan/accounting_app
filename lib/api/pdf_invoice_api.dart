@@ -159,9 +159,9 @@ class PdfInvoiceApi {
         item.PS,
         "${DateTime.parse(invoice.racun.datum).day}. ${DateTime.parse(invoice.racun.datum).month}. ${DateTime.parse(invoice.racun.datum).year}",
         '${item.kolicina}',
-        '${item.cena}',
+        '\€ ${item.cena}',
         '${item.DDV}%',
-        '${item.vsota}',
+        '\€ ${item.vsota}',
       ];
     }).toList();
 
@@ -215,7 +215,7 @@ class PdfInvoiceApi {
               children: [
                 buildText(
                   title: 'Neto Skupaj',
-                  value: netTotal.toStringAsFixed(2),
+                  value: '€' + netTotal.toStringAsFixed(2),
                   unite: true,
                 ),
                 /*buildText(
@@ -230,7 +230,7 @@ class PdfInvoiceApi {
                     fontSize: 14,
                     fontWeight: FontWeight.bold,
                   ),
-                  value: invoice.racun.bilanca,
+                  value: '€' + invoice.racun.bilanca,
                   unite: true,
                 ),
                 SizedBox(height: 2 * PdfPageFormat.mm),

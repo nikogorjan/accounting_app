@@ -99,6 +99,7 @@ flutter:
     - lib/sredstva/check.png
     - lib/sredstva/logout.png
     - lib/sredstva/menu.png
+    - lib/sredstva/ai1.png
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
 

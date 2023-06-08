@@ -186,20 +186,20 @@ class _InventarDesktopState extends State<InventarDesktop> {
                     Map<String, dynamic> data =
                         document.data()! as Map<String, dynamic>;
                     List<dynamic> accountsJson = data['predmeti'];
-                    List<Predmet> accounts = [];
+                    List<Predmet> predmeti = [];
                     for (int i = 0; i < accountsJson.length; i++) {
                       Map<String, dynamic> valueMap =
                           json.decode(accountsJson[i]);
                       Predmet NewAccount = Predmet.fromJson(valueMap);
-                      accounts.add(NewAccount);
+                      predmeti.add(NewAccount);
                     }
-                    accounts.sort(
+                    predmeti.sort(
                       (a, b) => a.ime.compareTo(b.ime),
                     );
                     return Column(
                       children: [
-                        for (int i = 0; i < accounts.length; i++) ...[
-                          ItemRow(predmet: accounts[i]),
+                        for (int i = 0; i < predmeti.length; i++) ...[
+                          ItemRow(predmet: predmeti[i]),
                           Divider(
                             height: 5,
                           )

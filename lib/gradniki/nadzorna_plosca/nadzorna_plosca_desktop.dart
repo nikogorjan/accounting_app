@@ -27,7 +27,7 @@ class _NadzornaPloscaDesktopState extends State<NadzornaPloscaDesktop> {
             child: Container(
               padding: EdgeInsets.fromLTRB(0, 0, 0, 0),
               child: Text(
-                'Nadzorna plošča',
+                'Armaturna plošča',
                 style: TextStyle(fontFamily: 'OpenSans', fontSize: 36),
               ),
             ),

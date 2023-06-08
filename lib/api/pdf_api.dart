@@ -34,20 +34,6 @@ class PdfApi {
       file = File('${dir.path}/$name');
       await file.writeAsBytes(await pdf.save());
       box.put('data', path);
-      /*try {
-        await file.writeAsBytes(await pdf.save());
-        return file;
-      } catch (e) {
-        debugPrint('$e');
-      }
-
-      final uri = Uri.parse(path);
-
-      if (await canLaunchUrl(uri)) {
-        await launchUrl(uri);
-      } else {
-        throw 'Could not launch $path';
-      }*/
     }
 
     return file;

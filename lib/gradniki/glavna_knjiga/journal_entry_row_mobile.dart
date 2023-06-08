@@ -91,7 +91,8 @@ class _JournalEntryRowMobileState extends State<JournalEntryRowMobile> {
                   alignment: Alignment.centerLeft,
                   child: Container(
                     height: 30,
-                    child: Text(widget.vnos.debet,
+                    child: Text(
+                        double.parse(widget.vnos.debet).toStringAsFixed(2),
                         style: TextStyle(fontFamily: 'OpenSans', fontSize: 11)),
                   )),
               Align(
@@ -124,7 +125,8 @@ class _JournalEntryRowMobileState extends State<JournalEntryRowMobile> {
                     alignment: Alignment.centerLeft,
                     child: Container(
                       height: 30,
-                      child: Text(widget.vnos.kredit,
+                      child: Text(
+                          double.parse(widget.vnos.debet).toStringAsFixed(2),
                           style:
                               TextStyle(fontFamily: 'OpenSans', fontSize: 11)),
                     )),

@@ -27,7 +27,7 @@ class _InventarMobileState extends State<InventarMobile> {
       children: [
         Container(
           height: MediaQuery.of(context).size.height - 80,
-          child: Column(
+          child: ListView(
             children: [
               Row(
                 children: [

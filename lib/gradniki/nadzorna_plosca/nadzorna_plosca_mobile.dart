@@ -28,7 +28,7 @@ class _NadzornaPloscaMobileState extends State<NadzornaPloscaMobile> {
       child: ListView(
         children: [
           Text(
-            'Nadzorna plošča',
+            'Armaturna plošča',
             style: TextStyle(fontFamily: 'OpenSans', fontSize: 24),
           ),
           SizedBox(
