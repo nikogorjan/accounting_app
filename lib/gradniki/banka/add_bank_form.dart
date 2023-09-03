@@ -24,13 +24,21 @@ class AddBankForm extends StatefulWidget {
 class _AddBankFormState extends State<AddBankForm> {
   final _imeController = TextEditingController();
   final _bilancaController = TextEditingController();
+  final Stream<QuerySnapshot> _usersStream = FirebaseFirestore.instance
+      .collection('Users')
+      .where('email', isEqualTo: box.get('email'))
+      .snapshots();
+
+  String dropdownValue = '';
+  bool changed = false;
+  String kontKapital = '';
 
   @override
   Widget build(BuildContext context) {
     return Container(
       padding: EdgeInsets.all(20),
       width: 600,
-      height: 300,
+      height: 500,
       child: Column(
         children: [
           SingleChildScrollView(
@@ -127,6 +135,126 @@ class _AddBankFormState extends State<AddBankForm> {
             ),
           ),
           SizedBox(
+            height: 30,
+          ),
+          SingleChildScrollView(
+            scrollDirection: Axis.horizontal,
+            child: Row(
+              children: [
+                Align(
+                  alignment: Alignment.centerLeft,
+                  child: Container(
+                    height: 30,
+                    width: 560,
+                    child: Text('KONT LASTNIŠKEGA KAPITALA'),
+                  ),
+                )
+              ],
+            ),
+          ),
+          SingleChildScrollView(
+            scrollDirection: Axis.horizontal,
+            child: Row(
+              children: [
+                Container(
+                  height: 50,
+                  width: 560,
+                  child: SizedBox(
+                      width: 310,
+                      child: StreamBuilder<QuerySnapshot>(
+                        stream: _usersStream,
+                        builder: (BuildContext context,
+                            AsyncSnapshot<QuerySnapshot> snapshot) {
+                          if (snapshot.hasError) {
+                            return Text("Something went wrong");
+                          }
+
+                          if (snapshot.connectionState ==
+                              ConnectionState.waiting) {
+                            return Text("Loading");
+                          }
+
+                          return ListView(
+                            children: snapshot.data!.docs
+                                .map((DocumentSnapshot document) {
+                              Map<String, dynamic> data =
+                                  document.data()! as Map<String, dynamic>;
+
+                              List<dynamic> accountsJson = data['konti'];
+                              List<Kont> accounts = [];
+                              List<String> accountNames = [];
+                              for (int i = 0; i < accountsJson.length; i++) {
+                                Map<String, dynamic> valueMap =
+                                    json.decode(accountsJson[i]);
+                                Kont NewAccount = Kont.fromJson(valueMap);
+                                accounts.add(NewAccount);
+                              }
+
+                              for (int j = 0; j < accounts.length; j++) {
+                                String str = accounts[j].ime;
+                                accountNames.add(str);
+                              }
+                              dropdownValue = accountNames.first;
+                              if (changed == false) {
+                                kontKapital = dropdownValue;
+                              }
+                              //debetItem = dropdownValue;
+
+                              return Container(
+                                width: 310,
+                                height: 50,
+                                child: DropdownButtonFormField<String>(
+                                  decoration: InputDecoration(
+                                    focusedBorder: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(0),
+
+                                      //<-- SEE HERE
+                                      borderSide: BorderSide(
+                                          width: 1, color: Colors.blueAccent),
+                                    ),
+                                    enabledBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                          width: 1,
+                                          color: Colors.grey), //<-- SEE HERE
+                                      borderRadius: BorderRadius.circular(0),
+                                    ),
+                                  ),
+                                  value: dropdownValue,
+                                  elevation: 16,
+                                  style:
+                                      const TextStyle(fontFamily: 'OpenSans'),
+                                  items: accountNames
+                                      .map<DropdownMenuItem<String>>(
+                                          (String value) {
+                                    return DropdownMenuItem<String>(
+                                      value: value,
+                                      child: Text(
+                                        value,
+                                        style: TextStyle(
+                                            fontFamily: 'OpenSans',
+                                            color: Colors.black),
+                                      ),
+                                    );
+                                  }).toList(),
+                                  onChanged: (String? value) {
+                                    // This is called when the user selects an item.
+                                    setState(() {
+                                      dropdownValue = value!;
+                                    });
+                                    kontKapital = dropdownValue;
+                                    changed = true;
+                                  },
+                                ),
+                              );
+                            }).toList(),
+                          );
+                        },
+                      )),
+                )
+              ],
+            ),
+          ),
+          SizedBox(
             height: 20,
           ),
           ConstrainedBox(
@@ -156,8 +284,30 @@ class _AddBankFormState extends State<AddBankForm> {
                       bilanca: _bilancaController.text.toString(),
                       amortizacija: '',
                       bilancaDate: DateTime.now().toString(),
-                      amortizacijaDate: DateTime.now().toString());
+                      amortizacijaDate: DateTime.now().toString(),
+                      debet: _bilancaController.text.toString(),
+                      kredit: '0');
                   accounts.add(kon);
+
+                  int indexkapital = accounts
+                      .indexWhere((element) => element.ime == kontKapital);
+                  Kont kapitalold = accounts[indexkapital];
+                  accounts[indexkapital] = Kont(
+                    ID: kapitalold.ID,
+                    ime: kapitalold.ime,
+                    tip: kapitalold.tip,
+                    podtip: kapitalold.podtip,
+                    bilanca: (double.parse(kapitalold.bilanca) -
+                            double.parse(_bilancaController.text.toString()))
+                        .toString(),
+                    amortizacija: kapitalold.amortizacija,
+                    bilancaDate: kapitalold.bilancaDate,
+                    amortizacijaDate: kapitalold.amortizacijaDate,
+                    debet: kapitalold.debet,
+                    kredit: (double.parse(kapitalold.kredit) +
+                            double.parse(_bilancaController.text.toString()))
+                        .toString(),
+                  );
 
                   List<String> kontiJson = [];
                   for (int i = 0; i < accounts.length; i++) {
@@ -180,7 +330,8 @@ class _AddBankFormState extends State<AddBankForm> {
                       ID: uuid.v1(),
                       ime: _imeController.text.toString(),
                       bilanca: _bilancaController.text.toString(),
-                      transakcije: transakcije);
+                      transakcije: transakcije,
+                      selected: false);
 
                   BankeiJson.add(jsonEncode(newBanka));
 

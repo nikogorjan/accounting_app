@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
@@ -316,6 +317,44 @@ class _MenuNavigationState extends State<MenuNavigation> {
                         ),
                         Text(
                           'Glavna knjiga',
+                          style: TextStyle(
+                              fontFamily: 'OpenSans',
+                              fontSize: 16,
+                              fontWeight: FontWeight.w400,
+                              color: Colors.black),
+                        ),
+                      ],
+                    ),
+                  ),
+                )),
+          ),
+          SizedBox(
+            height: 50,
+          ),
+          Container(
+            width: 300,
+            height: 50,
+            //color: Colors.blue,
+            child: TextButton(
+                onPressed: () {
+                  box.delete('email');
+                  FirebaseAuth.instance.signOut();
+                },
+                child: Align(
+                  alignment: Alignment.centerLeft,
+                  child: Container(
+                    padding: EdgeInsets.fromLTRB(20, 0, 0, 0),
+                    child: Row(
+                      children: [
+                        ImageIcon(
+                          AssetImage('lib/sredstva/logout.png'),
+                          color: Colors.black,
+                        ),
+                        SizedBox(
+                          width: 10,
+                        ),
+                        Text(
+                          'Odjava',
                           style: TextStyle(
                               fontFamily: 'OpenSans',
                               fontSize: 16,

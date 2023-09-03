@@ -51,7 +51,13 @@ class _DashboardScreenDesktopState extends State<DashboardScreenDesktop> {
             Container(
               margin: EdgeInsets.all(15),
               width: 300,
-              color: Color(0xEEEEEEEE).withOpacity(0.5),
+              decoration: BoxDecoration(
+                  color: Colors.white,
+                  border: Border(
+                      right: BorderSide(
+                          color: Color(0xEEEEEEEE).withOpacity(0.5),
+                          width: 2))),
+              //color: Colors.white, //Color(0xEEEEEEEE).withOpacity(0.5),
               child: MenuNavigation(),
             ),
           ],
@@ -76,15 +82,6 @@ class _DashboardScreenDesktopState extends State<DashboardScreenDesktop> {
                           child: Row(
                             children: [
                               Spacer(),
-                              Container(
-                                padding: const EdgeInsets.fromLTRB(0, 0, 50, 0),
-                                child: ElevatedButton(
-                                    onPressed: () {
-                                      box.delete('email');
-                                      FirebaseAuth.instance.signOut();
-                                    },
-                                    child: Text('izpis')),
-                              ),
                             ],
                           ),
                         )),

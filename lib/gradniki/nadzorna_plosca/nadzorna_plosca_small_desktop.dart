@@ -3,6 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 
+import 'grafi/banka_carousel.dart';
+import 'grafi/gibanje_kapitala_graf.dart';
+import 'grafi/odhodki_graf.dart';
+import 'grafi/poslovni_izid_graf.dart';
+import 'grafi/prodaje_graf.dart';
+import 'grafi/racuni_graf.dart';
+
 class NadzornaPloscaSmallDesktop extends StatefulWidget {
   const NadzornaPloscaSmallDesktop({super.key});
 
@@ -41,6 +48,7 @@ class _NadzornaPloscaSmallDesktopState
                         width: 400,
                         height: 400,
                         color: Colors.black,
+                        child: BankaCarousel(),
                       )
                     ],
                   )),
@@ -58,6 +66,7 @@ class _NadzornaPloscaSmallDesktopState
                         width: 400,
                         height: 400,
                         color: Color(0xEEEEEEEE).withOpacity(0.5),
+                        child: PoslovniIzidGraf(),
                       )
                     ],
                   )),
@@ -79,6 +88,7 @@ class _NadzornaPloscaSmallDesktopState
                         width: 400,
                         height: 400,
                         color: Color(0xEEEEEEEE).withOpacity(0.5),
+                        child: OdhodkiGraf(),
                       )
                     ],
                   )),
@@ -93,6 +103,7 @@ class _NadzornaPloscaSmallDesktopState
                         width: 400,
                         height: 400,
                         color: Color(0xEEEEEEEE).withOpacity(0.5),
+                        child: GibanjeKapitala(),
                       )
                     ],
                   )),
@@ -114,6 +125,7 @@ class _NadzornaPloscaSmallDesktopState
                         width: 400,
                         height: 400,
                         color: Color(0xEEEEEEEE).withOpacity(0.5),
+                        child: ProdajeGraf(),
                       )
                     ],
                   )),
@@ -128,6 +140,7 @@ class _NadzornaPloscaSmallDesktopState
                         width: 400,
                         height: 400,
                         color: Color(0xEEEEEEEE).withOpacity(0.5),
+                        child: RacuniGraf(),
                       )
                     ],
                   )),
