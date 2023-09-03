@@ -4,7 +4,7 @@ class Banka {
   final String ID;
   final String ime;
   final String bilanca;
-  final List<String> transakcije;
+  final List<dynamic> transakcije;
 
   const Banka({
     required this.ID,
